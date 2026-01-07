@@ -24,12 +24,12 @@
 </head>
 <body class="text-slate-800 antialiased">
 
-    <div class="flex min-h-screen">
+    <div class="app-shell">
         <!-- Mobile Backdrop -->
-        <div id="mobileBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+        <div id="mobileBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden sm:hidden"></div>
 
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky md:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden sm:flex flex-col sticky sm:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
             <!-- Collapse/Expand Toggle Button (Desktop Only) -->
             <button id="sidebarToggle" type="button" title="Toggle Sidebar" aria-label="Toggle sidebar" aria-expanded="true">
                 <span class="toggle-glyph" aria-hidden="true">
@@ -76,7 +76,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 bg-[#f8fafc] p-3 sm:p-4 md:p-8 overflow-y-auto h-screen">
+        <main class="flex-1 bg-[#f8fafc] p-3 sm:p-4 md:p-8 overflow-y-auto min-h-screen">
             <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
                 <div class="flex items-center justify-between w-full sm:w-auto">
                     <div>
@@ -84,7 +84,7 @@
                         <p class="text-slate-500 text-sm">Financial reports, audit logs, and export tools • <span id="currentDate">January 7, 2026</span></p>
                     </div>
                     <!-- Mobile Menu Toggle -->
-                    <button id="mobileMenuToggle" class="md:hidden p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
+                    <button id="mobileMenuToggle" class="sm:hidden p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
                         <ion-icon name="menu-outline" class="text-2xl text-slate-600"></ion-icon>
                     </button>
                 </div>
@@ -171,7 +171,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="table-responsive overflow-x-auto">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 border-b border-slate-100">
                                 <tr>
@@ -271,7 +271,7 @@
                         <h3 class="font-semibold text-slate-900">Defaulters List</h3>
                         <p class="text-xs text-slate-500 mt-1">Students with outstanding fee balances</p>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="table-responsive overflow-x-auto">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 border-b border-slate-100">
                                 <tr>
@@ -374,7 +374,7 @@
                         <h3 class="font-semibold text-slate-900">Activity Log</h3>
                         <p class="text-xs text-slate-500 mt-1">Chronological record of all financial actions</p>
                     </div>
-                    <div class="overflow-x-auto">
+                    <div class="table-responsive overflow-x-auto">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 border-b border-slate-100">
                                 <tr>

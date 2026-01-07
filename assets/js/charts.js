@@ -12,14 +12,14 @@ function initDashboardCharts() {
                     label: 'Paid', 
                     data: [65000, 59000, 80000, 81000, 56000, 55000, 40000, 45000, 78000, 92000, 85000, 90000],
                     backgroundColor: '#10B981', 
-                    borderRadius: 6, 
-                    barThickness: 12
+                    borderRadius: 6,
+                    maxBarThickness: 32
                 }, {
                     label: 'Outstanding', 
                     data: [-15000, -12000, -8000, -5000, -10000, -15000, -25000, -30000, -12000, -8000, -10000, -5000],
                     backgroundColor: '#cbd5e1', 
-                    borderRadius: 6, 
-                    barThickness: 12
+                    borderRadius: 6,
+                    maxBarThickness: 32
                 }]
             },
             options: {
@@ -87,13 +87,13 @@ function initFeeCollectionChart() {
                     data: [450000, 380000, 520000, 410000, 490000, 550000],
                     backgroundColor: '#10B981',
                     borderRadius: 6,
-                    barThickness: 16
+                    maxBarThickness: 36
                 }, {
                     label: 'Expected',
                     data: [500000, 500000, 550000, 500000, 550000, 600000],
                     backgroundColor: '#e2e8f0',
                     borderRadius: 6,
-                    barThickness: 16
+                    maxBarThickness: 36
                 }]
             },
             options: {
@@ -155,7 +155,8 @@ function initReportsCharts() {
                     label: 'Avg Grade (Points)',
                     data: [8.5, 7.2, 7.8, 6.9],
                     backgroundColor: '#8b5cf6',
-                    borderRadius: 8
+                    borderRadius: 8,
+                    maxBarThickness: 36
                 }]
             },
             options: {

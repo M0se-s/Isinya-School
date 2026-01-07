@@ -3,6 +3,9 @@
 :root {
     --emerald-500: #10B981;
     --emerald-600: #059669;
+    --sidebar-expanded-width: 16rem;
+    --sidebar-compact-width: 4.75rem;
+    --content-max-width: 1120px;
 }
 
 body {
@@ -10,6 +13,23 @@ body {
     background-color: #F9FAFB;
     letter-spacing: -0.011em;
     font-size: 14px;
+    min-height: 100dvh;
+}
+
+/* Layout Shell */
+.app-shell {
+    display: flex;
+    min-height: 100dvh;
+    width: 100%;
+}
+
+.app-shell > main {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-shell > aside {
+    min-width: 0;
 }
 
 /* Typography Scale - Consistent Sizes */
@@ -440,9 +460,15 @@ body {
 
 /* Sidebar Collapse/Expand Functionality */
 #sidebar {
+    display: flex;
+    flex-direction: column;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+}
+
+#sidebar.hidden {
+    display: none;
 }
 
 #sidebarToggle {
@@ -501,43 +527,51 @@ body {
 }
 
 /* Collapsed State */
-#sidebar.collapsed {
-    width: 5rem;
+#sidebar.collapsed,
+#sidebar.sidebar-compact {
+    width: var(--sidebar-compact-width);
 }
 
-#sidebar.collapsed #sidebarToggle .toggle-glyph {
+#sidebar.collapsed #sidebarToggle .toggle-glyph,
+#sidebar.sidebar-compact #sidebarToggle .toggle-glyph {
     flex-direction: column;
     gap: 4px;
 }
 
-#sidebar.collapsed #sidebarToggle .toggle-glyph-pane {
+#sidebar.collapsed #sidebarToggle .toggle-glyph-pane,
+#sidebar.sidebar-compact #sidebarToggle .toggle-glyph-pane {
     height: 10px;
 }
 
-#sidebar.collapsed #sidebarToggle .toggle-glyph-divider {
+#sidebar.collapsed #sidebarToggle .toggle-glyph-divider,
+#sidebar.sidebar-compact #sidebarToggle .toggle-glyph-divider {
     height: 2px;
     width: 18px;
 }
 
-#sidebar.collapsed .sidebar-text {
+#sidebar.collapsed .sidebar-text,
+#sidebar.sidebar-compact .sidebar-text {
     opacity: 0;
     width: 0;
     overflow: hidden;
     white-space: nowrap;
 }
 
-#sidebar.collapsed .sidebar-link {
+#sidebar.collapsed .sidebar-link,
+#sidebar.sidebar-compact .sidebar-link {
     justify-content: center;
     padding: 0.75rem;
     position: relative;
 }
 
-#sidebar.collapsed .sidebar-link ion-icon {
+#sidebar.collapsed .sidebar-link ion-icon,
+#sidebar.sidebar-compact .sidebar-link ion-icon {
     margin: 0;
 }
 
 /* Hide user profile section when collapsed */
-#sidebar.collapsed .mb-6 {
+#sidebar.collapsed .mb-6,
+#sidebar.sidebar-compact .mb-6 {
     opacity: 0;
     height: 0;
     overflow: hidden;
@@ -545,17 +579,20 @@ body {
 }
 
 /* Center logo when collapsed */
-#sidebar.collapsed .flex.items-center.gap-3 {
+#sidebar.collapsed .flex.items-center.gap-3,
+#sidebar.sidebar-compact .flex.items-center.gap-3 {
     justify-content: center;
     gap: 0;
 }
 
-#sidebar.collapsed .w-10.h-10.bg-emerald-500 {
+#sidebar.collapsed .w-10.h-10.bg-emerald-500,
+#sidebar.sidebar-compact .w-10.h-10.bg-emerald-500 {
     margin: 0;
 }
 
 /* Hide menu label when collapsed */
-#sidebar.collapsed nav > p {
+#sidebar.collapsed nav > p,
+#sidebar.sidebar-compact nav > p {
     opacity: 0;
     height: 0;
     overflow: hidden;
@@ -564,11 +601,15 @@ body {
 }
 
 /* Tooltip on hover for collapsed state */
-#sidebar.collapsed .sidebar-link {
+#sidebar.collapsed .sidebar-link,
+#sidebar.sidebar-compact .sidebar-link {
     position: relative;
 }
 
-#sidebar.collapsed .sidebar-link:hover::after {
+#sidebar.collapsed .sidebar-link:hover::after,
+#sidebar.collapsed .sidebar-link:focus-visible::after,
+#sidebar.sidebar-compact .sidebar-link:hover::after,
+#sidebar.sidebar-compact .sidebar-link:focus-visible::after {
     content: attr(data-tooltip);
     position: absolute;
     left: 100%;
@@ -611,6 +652,75 @@ body {
     #sidebar.collapsed nav > p {
         opacity: 1;
         height: auto;
+    }
+}
+
+/* Tablet: compact sidebar with icon-only navigation */
+@media (min-width: 641px) and (max-width: 1024px) {
+    #sidebar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        height: 100dvh;
+        transform: translateX(0) !important;
+        width: var(--sidebar-compact-width);
+        box-shadow: none;
+    }
+
+    #sidebarToggle {
+        display: none !important;
+    }
+}
+
+/* Large screens: allow persistent & toggleable sidebar */
+@media (min-width: 1025px) {
+    #sidebar {
+        display: flex;
+        position: sticky;
+        top: 0;
+        height: 100dvh;
+        transform: translateX(0) !important;
+        width: var(--sidebar-expanded-width);
+    }
+
+    .app-shell > main {
+        max-width: var(--content-max-width);
+        margin-right: auto;
+    }
+}
+
+/* Shared desktop/tablet adjustments */
+@media (min-width: 641px) {
+    #sidebar {
+        box-shadow: none;
+    }
+
+    #sidebar .toggle-glyph-pane,
+    #sidebar .toggle-glyph-divider {
+        transition: none;
+    }
+
+    main {
+        width: 100%;
+    }
+}
+
+/* Global table responsiveness */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.table-responsive table {
+    width: 100%;
+    min-width: 640px;
+}
+
+@media (max-width: 640px) {
+    .table-responsive table {
+        min-width: 520px;
     }
 }
 

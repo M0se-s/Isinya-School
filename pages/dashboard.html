@@ -45,12 +45,12 @@
 </head>
 <body class="text-slate-800 antialiased relative">
 
-    <div class="flex min-h-screen">
+    <div class="app-shell">
         <!-- Mobile Backdrop -->
-        <div id="mobileBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+        <div id="mobileBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden sm:hidden"></div>
 
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky md:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden sm:flex flex-col sticky sm:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 ease-in-out">
             <!-- Collapse/Expand Toggle Button (Desktop Only) -->
             <button id="sidebarToggle" type="button" title="Toggle Sidebar" aria-label="Toggle sidebar" aria-expanded="true">
                 <span class="toggle-glyph" aria-hidden="true">
@@ -98,7 +98,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 bg-[#f8fafc] p-3 sm:p-4 md:p-8 overflow-y-auto h-screen">
+        <main class="flex-1 bg-[#f8fafc] p-3 sm:p-4 md:p-8 overflow-y-auto min-h-screen">
             
             <!-- Header Container -->
             <div id="header-container"></div>
@@ -181,7 +181,7 @@
                             <h3 class="font-bold text-sm sm:text-base">Recent Fee Payments</h3>
                             <button id="viewAllPaymentsBtn" class="text-xs text-emerald-600 font-semibold hover:underline">View All</button>
                         </div>
-                        <div class="overflow-x-auto">
+                        <div class="table-responsive overflow-x-auto">
                             <table class="w-full text-left min-w-[500px]">
                                 <thead class="bg-slate-50/50 text-slate-400 text-xs uppercase font-bold">
                                     <tr>

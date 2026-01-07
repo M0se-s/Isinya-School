@@ -5,6 +5,11 @@ function setupNavigation() {
     
     navLinks.forEach(link => {
         const linkPage = link.getAttribute('href');
+        const tooltip = link.getAttribute('data-tooltip');
+
+        if (tooltip && !link.getAttribute('aria-label')) {
+            link.setAttribute('aria-label', tooltip);
+        }
         
         // Set active state based on current page
         if (linkPage === currentPage || 
@@ -245,30 +250,110 @@ function showSearchFeedback(searchTerm, resultsCount) {
     }, 3000);
 }
 
-// Desktop Sidebar Collapse/Expand Toggle
+const SIDEBAR_BREAKPOINTS = {
+    mobileMax: 640,
+    tabletMax: 1024
+};
+
+// Desktop Sidebar Collapse/Expand Toggle with responsive handling
 function setupSidebarToggle() {
-    const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
-    
-    if (!sidebarToggle || !sidebar) return;
-    
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+    if (!sidebar) return;
+
     const updateToggleState = (isCollapsed) => {
         sidebar.classList.toggle('collapsed', isCollapsed);
+
+        if (!sidebarToggle) return;
+
         sidebarToggle.setAttribute('aria-expanded', (!isCollapsed).toString());
         sidebarToggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
         sidebarToggle.setAttribute('title', isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar');
     };
 
-    // Check localStorage for saved state
-    const savedState = localStorage.getItem('sidebarCollapsed');
-    updateToggleState(savedState === 'true');
-    
-    // Toggle sidebar on button click
+    const syncCollapsedPreference = () => {
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        updateToggleState(savedState === 'true');
+    };
+
+    const applyResponsiveState = () => {
+        const width = window.innerWidth;
+        const isMobile = width <= SIDEBAR_BREAKPOINTS.mobileMax;
+        const isTablet = width > SIDEBAR_BREAKPOINTS.mobileMax && width <= SIDEBAR_BREAKPOINTS.tabletMax;
+        const isMobileOpen = sidebar.classList.contains('translate-x-0');
+
+        if (isMobile) {
+            sidebar.classList.remove('sidebar-compact');
+            sidebar.classList.remove('collapsed');
+
+            if (!isMobileOpen) {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.add('hidden');
+                if (mobileBackdrop) mobileBackdrop.classList.add('hidden');
+            }
+
+            if (sidebarToggle) {
+                sidebarToggle.setAttribute('aria-hidden', 'true');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
+                sidebarToggle.setAttribute('aria-label', 'Sidebar hidden on mobile');
+                sidebarToggle.setAttribute('title', 'Sidebar hidden on mobile');
+            }
+
+            return;
+        }
+
+        if (document.body.style.overflow === 'hidden') {
+            document.body.style.overflow = '';
+        }
+
+        sidebar.classList.remove('hidden');
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        sidebar.style.transform = '';
+
+        if (isTablet) {
+            sidebar.classList.add('sidebar-compact');
+            sidebar.classList.remove('collapsed');
+
+            if (sidebarToggle) {
+                sidebarToggle.setAttribute('aria-hidden', 'true');
+                sidebarToggle.setAttribute('aria-expanded', 'false');
+                sidebarToggle.setAttribute('aria-label', 'Sidebar locked to icon mode on tablet');
+                sidebarToggle.setAttribute('title', 'Sidebar locked to icon mode on tablet');
+            }
+
+            return;
+        }
+
+        sidebar.classList.remove('sidebar-compact');
+
+        if (sidebarToggle) {
+            sidebarToggle.removeAttribute('aria-hidden');
+        }
+
+        syncCollapsedPreference();
+    };
+
+    window.__applyResponsiveSidebarState = applyResponsiveState;
+
+    applyResponsiveState();
+    window.addEventListener('resize', applyResponsiveState);
+    window.addEventListener('orientationchange', applyResponsiveState);
+
+    if (!sidebarToggle) return;
+
+    syncCollapsedPreference();
+
     sidebarToggle.addEventListener('click', () => {
-        const currentCollapsed = sidebar.classList.contains('collapsed');
-        const nextCollapsed = !currentCollapsed;
+        if (window.innerWidth <= SIDEBAR_BREAKPOINTS.tabletMax) {
+            return;
+        }
+
+        const nextCollapsed = !sidebar.classList.contains('collapsed');
         updateToggleState(nextCollapsed);
-        localStorage.setItem('sidebarCollapsed', nextCollapsed);
+        localStorage.setItem('sidebarCollapsed', nextCollapsed.toString());
     });
 }
 
@@ -298,6 +383,10 @@ function setupMobileMenu() {
             mobileBackdrop.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
         }
+
+        if (typeof window.__applyResponsiveSidebarState === 'function') {
+            window.__applyResponsiveSidebarState();
+        }
     }
     
     // Toggle on button click
@@ -318,10 +407,19 @@ function setupMobileMenu() {
     
     // Close sidebar on window resize to desktop size
     window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
+        const width = window.innerWidth;
+
+        if (width > SIDEBAR_BREAKPOINTS.mobileMax) {
             sidebar.classList.remove('translate-x-0', '-translate-x-full');
+            sidebar.classList.remove('hidden');
             mobileBackdrop.classList.add('hidden');
             document.body.style.overflow = '';
+        } else if (!sidebar.classList.contains('translate-x-0')) {
+            sidebar.classList.add('hidden');
+        }
+
+        if (typeof window.__applyResponsiveSidebarState === 'function') {
+            window.__applyResponsiveSidebarState();
         }
     });
 }
