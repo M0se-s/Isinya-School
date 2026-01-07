@@ -46,8 +46,11 @@
 <body class="text-slate-800 antialiased relative">
 
     <div class="flex min-h-screen">
+        <!-- Mobile Backdrop -->
+        <div id="mobileBackdrop" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+
         <!-- Sidebar -->
-        <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+        <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky md:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200 text-xl">
@@ -299,7 +302,7 @@
                     <!-- Manage Students -->
                     <div class="glass-card rounded-[2rem] p-6">
                         <h3 class="font-bold mb-6">Manage Students</h3>
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <button onclick="window.location.href='student-records.html'" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30 transition-all group">
                                 <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-emerald-600">
                                     <ion-icon name="person-add-outline"></ion-icon>
@@ -359,7 +362,7 @@
                 </button>
             </div>
             <div class="p-6 max-h-[60vh] overflow-y-auto">
-                <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                     <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
                         <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Total Paid (YTD)</p>
                         <p class="text-xl font-bold">KES 145,200</p>
