@@ -4,14 +4,14 @@
 function initDashboardCharts() {
     const collectionCtx = document.getElementById('collectionChart');
     if (collectionCtx) {
-        new Chart(collectionCtx.getContext('2d'), {
+        window.collectionChart = new Chart(collectionCtx.getContext('2d'), {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'Paid', 
                     data: [65000, 59000, 80000, 81000, 56000, 55000, 40000, 45000, 78000, 92000, 85000, 90000],
-                    backgroundColor: '#22c55e', 
+                    backgroundColor: '#10B981', 
                     borderRadius: 6, 
                     barThickness: 12
                 }, {
@@ -41,13 +41,13 @@ function initDashboardCharts() {
 
     const enrollmentCtx = document.getElementById('enrollmentChart');
     if (enrollmentCtx) {
-        new Chart(enrollmentCtx.getContext('2d'), {
+        window.enrollmentChart = new Chart(enrollmentCtx.getContext('2d'), {
             type: 'doughnut',
             data: {
                 labels: ['Paid', 'Partial', 'Unpaid'],
                 datasets: [{ 
                     data: [65, 20, 15], 
-                    backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'], 
+                    backgroundColor: ['#10B981', '#f59e0b', '#ef4444'], 
                     borderWidth: 0, 
                     cutout: '80%' 
                 }]
@@ -124,7 +124,7 @@ function initReportsCharts() {
                 labels: ['Tuition Fees', 'Transport', 'Boarding', 'Lunch Program', 'Other'],
                 datasets: [{
                     data: [45, 15, 25, 10, 5],
-                    backgroundColor: ['#22c55e', '#3b82f6', '#8b5cf6', '#f59e0b', '#64748b'],
+                    backgroundColor: ['#10B981', '#3b82f6', '#8b5cf6', '#f59e0b', '#64748b'],
                     borderWidth: 0
                 }]
             },

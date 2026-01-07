@@ -71,7 +71,7 @@ New structure:
         <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
+                    <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200 text-xl">
                         <ion-icon name="school-outline"></ion-icon>
                     </div>
                     <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
@@ -123,7 +123,7 @@ New structure:
                             <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg flex">
                                     <ion-icon name="search-outline"></ion-icon>
                             </div>
-                            <input type="text" placeholder="Search students, fees..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500/20 w-64 transition-all">
+                            <input type="text" placeholder="Search students, fees..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 w-64 transition-all">
                         </div>
                         <button class="p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
                             <ion-icon name="notifications-outline" class="text-xl text-slate-600"></ion-icon>
@@ -134,15 +134,15 @@ New structure:
                 <!-- Top Stats Row -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     <!-- Total Collected -->
-                    <div class="lg:col-span-2 bg-green-500 rounded-[2rem] p-6 text-white relative overflow-hidden shadow-xl shadow-green-100">
+                    <div class="lg:col-span-2 bg-emerald-500 rounded-[2rem] p-6 text-white relative overflow-hidden shadow-xl shadow-emerald-100">
                         <div class="relative z-10">
-                            <p class="text-green-100 text-sm font-medium mb-1">Total Fees Collected</p>
+                            <p class="text-emerald-100 text-sm font-medium mb-1">Total Fees Collected</p>
                             <h2 class="text-4xl font-bold mb-6">KES 842,670.00</h2>
                             <div class="flex gap-2">
-                                <button class="px-4 py-2 bg-white text-green-600 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-green-50 transition-colors">
+                                <button class="px-4 py-2 bg-white text-emerald-600 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-emerald-50 transition-colors">
                                     <ion-icon name="add-outline" class="text-lg"></ion-icon> Log Payment
                                 </button>
-                                <button class="px-4 py-2 bg-green-400/30 text-white rounded-xl text-sm font-medium hover:bg-green-400/50 transition-colors">
+                                <button class="px-4 py-2 bg-emerald-400/30 text-white rounded-xl text-sm font-medium hover:bg-emerald-400/50 transition-colors">
                                     Send Reminders
                                 </button>
                             </div>
@@ -177,7 +177,7 @@ New structure:
                             <div class="flex items-center gap-6">
                                 <div class="flex items-center gap-4">
                                     <div class="flex items-center gap-2">
-                                        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
                                         <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Paid</span>
                                     </div>
                                     <div class="flex items-center gap-2">
@@ -203,7 +203,7 @@ New structure:
                     <div class="lg:col-span-2 glass-card rounded-[2rem] overflow-hidden">
                         <div class="p-6 border-b border-slate-100 flex items-center justify-between">
                             <h3 class="font-bold">Recent Fee Payments</h3>
-                            <button class="text-xs text-green-600 font-semibold hover:underline">View All</button>
+                            <button class="text-xs text-emerald-600 font-semibold hover:underline">View All</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left">
@@ -258,8 +258,8 @@ New structure:
                     <div class="glass-card rounded-[2rem] p-6">
                         <h3 class="font-bold mb-6">Manage Students</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <button onclick="openModal('addStudentModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-green-200 hover:bg-green-50/30 transition-all group">
-                                <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-green-600">
+                            <button onclick="openModal('addStudentModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/30 transition-all group">
+                                <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-emerald-600">
                                     <ion-icon name="person-add-outline"></ion-icon>
                                 </div>
                                 <span class="text-xs font-semibold">Add Student</span>
@@ -276,9 +276,9 @@ New structure:
                                 </div>
                                 <span class="text-xs font-semibold">Invoices</span>
                             </button>
-                            <button onclick="openModal('remindersModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-rose-200 hover:bg-rose-50/30 transition-all group">
+                            <button onclick="showComingSoon('Reminders')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-rose-200 hover:bg-rose-50/30 transition-all group">
                                 <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-rose-600">
-                                    <ion-icon name="mail-outline"></ion-icon>
+                                    <ion-icon name="notifications-outline"></ion-icon>
                                 </div>
                                 <span class="text-xs font-semibold">Reminders</span>
                             </button>
@@ -748,7 +748,7 @@ New structure:
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 61,500</td>
-                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 61,500</td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-semibold">KES 61,500</td>
                                         <td class="px-6 py-4 text-right text-slate-500">KES 0</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-success">PAID</span></td>
                                     </tr>
@@ -759,7 +759,7 @@ New structure:
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 43,500</td>
-                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-semibold">KES 40,000</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 3,500</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-warning">PARTIAL</span></td>
                                     </tr>
@@ -781,7 +781,7 @@ New structure:
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 52,000</td>
-                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 52,000</td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-semibold">KES 52,000</td>
                                         <td class="px-6 py-4 text-right text-slate-500">KES 0</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-success">PAID</span></td>
                                     </tr>
@@ -792,7 +792,7 @@ New structure:
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 56,800</td>
-                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 28,400</td>
+                                        <td class="px-6 py-4 text-right text-emerald-600 font-semibold">KES 28,400</td>
                                         <td class="px-6 py-4 text-right font-semibold">KES 28,400</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-warning">PARTIAL</span></td>
                                     </tr>
@@ -877,7 +877,7 @@ New structure:
                                         <td class="px-6 py-4 font-medium">Lucy Ochieng</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Parent</td>
                                         <td class="px-6 py-4 font-semibold">KES 40,000</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 40,000</td>
                                         <td class="px-6 py-4 text-slate-500">KES 0</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 31, 2026</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-success">FULFILLED</span></td>
@@ -886,7 +886,7 @@ New structure:
                                         <td class="px-6 py-4 font-medium">David Kariuki</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Alumni</td>
                                         <td class="px-6 py-4 font-semibold">KES 50,000</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 50,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 50,000</td>
                                         <td class="px-6 py-4 text-slate-500">KES 0</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Feb 15, 2026</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-success">FULFILLED</span></td>
@@ -895,7 +895,7 @@ New structure:
                                         <td class="px-6 py-4 font-medium">Patricia Mwangi</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Parent</td>
                                         <td class="px-6 py-4 font-semibold">KES 30,000</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 15,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 15,000</td>
                                         <td class="px-6 py-4 text-amber-600 font-semibold">KES 15,000</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Mar 31, 2026</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-warning">PARTIAL</span></td>
@@ -904,7 +904,7 @@ New structure:
                                         <td class="px-6 py-4 font-medium">George Kipchoge</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Sponsor</td>
                                         <td class="px-6 py-4 font-semibold">KES 75,000</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 45,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 45,000</td>
                                         <td class="px-6 py-4 text-rose-600 font-semibold">KES 30,000</td>
                                         <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
                                         <td class="px-6 py-4 text-right"><span class="badge-danger">OVERDUE</span></td>
@@ -943,7 +943,7 @@ New structure:
                                         <p class="text-sm font-semibold text-slate-700">Total Collected</p>
                                         <p class="text-xs text-slate-500">Actual receipts</p>
                                     </div>
-                                    <p class="text-lg font-bold text-green-600">KES 2,847,560</p>
+                                    <p class="text-lg font-bold text-emerald-600">KES 2,847,560</p>
                                 </div>
                                 <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                                     <div>
@@ -971,7 +971,7 @@ New structure:
                                     <p class="font-semibold text-slate-800">Equity Bank Kenya - Checking</p>
                                     <p class="text-xs text-slate-500 mt-1">Account: 1234567890 | Balance: KES 2,847,560</p>
                                 </div>
-                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-green-200 transition-colors">
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-emerald-200 transition-colors">
                                     <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Mpesa Collection</p>
                                     <p class="font-semibold text-slate-800">Isinya School - Till 123456</p>
                                     <p class="text-xs text-slate-500 mt-1">M-Pesa: 0723456789 | Collected: KES 1,924,320</p>
@@ -1015,7 +1015,7 @@ New structure:
                                         <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260107-089</td>
                                         <td class="px-6 py-4"><span class="badge-success">RECEIPT</span></td>
                                         <td class="px-6 py-4 text-sm">Faith Kipchoge - Tuition Payment</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 40,000</td>
                                         <td class="px-6 py-4">-</td>
                                         <td class="px-6 py-4 font-semibold">KES 2,847,560</td>
                                     </tr>
@@ -1024,7 +1024,7 @@ New structure:
                                         <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260106-087</td>
                                         <td class="px-6 py-4"><span class="badge-success">RECEIPT</span></td>
                                         <td class="px-6 py-4 text-sm">James Mwangi - Partial Payment</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 40,000</td>
                                         <td class="px-6 py-4">-</td>
                                         <td class="px-6 py-4 font-semibold">KES 2,807,560</td>
                                     </tr>
@@ -1042,7 +1042,7 @@ New structure:
                                         <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260104-083</td>
                                         <td class="px-6 py-4"><span class="badge-success">RECEIPT</span></td>
                                         <td class="px-6 py-4 text-sm">Sophia Njeri - Partial Payment M-Pesa</td>
-                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 28,400</td>
+                                        <td class="px-6 py-4 text-emerald-600 font-semibold">KES 28,400</td>
                                         <td class="px-6 py-4">-</td>
                                         <td class="px-6 py-4 font-semibold">KES 2,839,560</td>
                                     </tr>
@@ -1247,7 +1247,7 @@ New structure:
                 <form class="space-y-4">
                     <div class="space-y-1">
                         <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
-                        <input type="text" placeholder="Enter student name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500/20">
+                        <input type="text" placeholder="Enter student name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1">
@@ -1269,7 +1269,7 @@ New structure:
                         <input type="checkbox" class="w-5 h-5 rounded accent-indigo-600">
                         <span class="text-sm font-semibold text-indigo-700 uppercase tracking-wide">Scholarship Student</span>
                     </label>
-                    <button type="button" class="w-full py-4 bg-green-500 text-white font-bold rounded-2xl mt-4 hover:bg-green-600 shadow-lg shadow-green-100 transition-all">
+                    <button type="button" class="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl mt-4 hover:bg-emerald-600 shadow-lg shadow-emerald-100 transition-all">
                         Register Student
                     </button>
                 </form>
@@ -1360,7 +1360,7 @@ New structure:
                 </div>
                 <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 mb-6 flex items-start gap-4">
                     <ion-icon name="alert-circle-outline" class="text-2xl text-amber-500"></ion-icon>
-                    <div><p class="text-sm font-bold text-amber-800">12 Pending Notifications</p><p class="text-xs text-amber-600">Students with balances over KES 5,000</p></div>
+                    <div><p class="text-sm font-bold text-amber-800"><span id="pendingCount">12</span> Pending Notifications</p><p class="text-xs text-amber-600">Students with balances over KES 5,000</p></div>
                 </div>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors">
@@ -1368,10 +1368,13 @@ New structure:
                             <div class="w-8 h-8 rounded-full bg-slate-200 text-[10px] font-bold flex items-center justify-center">AC</div>
                             <div><p class="text-sm font-bold">Alex Chen</p><p class="text-[10px] text-rose-500">KES 2,400 unpaid</p></div>
                         </div>
-                        <button class="p-2 text-green-500 hover:bg-green-50 rounded-lg"><ion-icon name="send-outline"></ion-icon></button>
+                        <button onclick="sendStudentReminder(this)" data-name="Alex Chen" data-balance="2400" class="p-2 text-emerald-500 hover:bg-emerald-50 rounded-lg"><ion-icon name="send-outline"></ion-icon></button>
                     </div>
                 </div>
-                <button class="w-full mt-6 py-4 bg-green-500 text-white font-bold rounded-2xl shadow-lg shadow-green-100">Send Bulk Reminders</button>
+                <button id="bulkRemindersBtn" onclick="sendBulkReminders()" class="w-full mt-6 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-lg shadow-emerald-100 send-bulk-reminders-btn">
+                    <ion-icon name="send-outline"></ion-icon>
+                    <span class="ml-2">Send Bulk Reminders</span>
+                </button>
             </div>
         </div>
     </div>

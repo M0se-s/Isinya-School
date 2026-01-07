@@ -1,6 +1,21 @@
 // Student Records Management System - Isinya Township Secondary School
 
 // ============================================
+// STATUS DEFINITIONS
+// ============================================
+
+const studentStatuses = {
+    'Active': { label: 'Active', color: 'emerald', description: 'Currently enrolled and attending' },
+    'On Leave': { label: 'On Leave', color: 'amber', description: 'Temporary leave of absence' },
+    'Suspended': { label: 'Suspended', color: 'rose', description: 'Currently suspended' },
+    'Deferred': { label: 'Deferred', color: 'blue', description: 'Enrollment deferred' },
+    'Graduated': { label: 'Graduated', color: 'purple', description: 'Completed studies' },
+    'Alumni': { label: 'Alumni', color: 'indigo', description: 'Former student' },
+    'Transferred': { label: 'Transferred', color: 'slate', description: 'Transferred to another school' },
+    'Withdrawn': { label: 'Withdrawn', color: 'gray', description: 'Withdrew from school' }
+};
+
+// ============================================
 // DATA STORAGE
 // ============================================
 
@@ -20,6 +35,7 @@ let studentsData = [
         admissionDate: '2023-01-15',
         previousSchool: 'Kajiado Primary School',
         status: 'Active',
+        enrollmentStatus: 'Active',
         isScholarship: true,
         guardianName: 'John Kamau',
         guardianRelationship: 'Father',
@@ -29,6 +45,16 @@ let studentsData = [
         bloodGroup: 'O+',
         allergies: 'None',
         medicalNotes: '',
+        // Financial Information
+        financialInfo: {
+            totalFees: 82500,
+            paidAmount: 82500,
+            balance: 0,
+            lastPayment: '2026-01-05',
+            paymentHistory: [
+                { date: '2026-01-05', amount: 82500, method: 'M-Pesa', reference: 'QA12345678' }
+            ]
+        },
         documents: {
             birthCertificate: { uploaded: true, fileName: 'Faith_BC.pdf', date: '2023-01-15' },
             nationalId: { uploaded: false, fileName: '', date: '' },
@@ -51,6 +77,7 @@ let studentsData = [
         admissionDate: '2023-01-20',
         previousSchool: 'Kitengela Primary',
         status: 'Active',
+        enrollmentStatus: 'Active',
         isScholarship: false,
         guardianName: 'Sarah Mwangi',
         guardianRelationship: 'Mother',
@@ -60,6 +87,17 @@ let studentsData = [
         bloodGroup: 'A+',
         allergies: 'Penicillin',
         medicalNotes: 'Asthmatic - carries inhaler',
+        // Financial Information
+        financialInfo: {
+            totalFees: 61800,
+            paidAmount: 46800,
+            balance: 15000,
+            lastPayment: '2026-01-03',
+            paymentHistory: [
+                { date: '2025-10-15', amount: 30000, method: 'Bank Transfer', reference: 'TRF-456789' },
+                { date: '2026-01-03', amount: 16800, method: 'M-Pesa', reference: 'QA87654321' }
+            ]
+        },
         documents: {
             birthCertificate: { uploaded: true, fileName: 'James_BC.pdf', date: '2023-01-20' },
             nationalId: { uploaded: false, fileName: '', date: '' },
@@ -68,6 +106,9 @@ let studentsData = [
         }
     }
 ];
+
+// Add generated students from dummy data
+if (window.generatedStudents) studentsData.push(...generatedStudents);
 
 // File storage simulation
 let uploadedFiles = {};
@@ -243,6 +284,60 @@ function viewStudentProfile(studentId) {
     document.getElementById('viewAdmissionDate').textContent = formatDate(student.admissionDate);
     document.getElementById('viewStatus').textContent = student.status;
 
+    // Set status in dropdown
+    const statusSelect = document.getElementById('updateStatusSelect');
+    if (statusSelect) {
+        statusSelect.value = student.status;
+    }
+
+    // Financial Information
+    if (student.financialInfo) {
+        const fi = student.financialInfo;
+        document.getElementById('viewTotalFees').textContent = `KES ${fi.totalFees?.toLocaleString() || '0'}`;
+        document.getElementById('viewPaidAmount').textContent = `KES ${fi.paidAmount?.toLocaleString() || '0'}`;
+        document.getElementById('viewBalance').textContent = `KES ${fi.balance?.toLocaleString() || '0'}`;
+        document.getElementById('viewLastPayment').textContent = fi.lastPayment ? formatDate(fi.lastPayment) : 'N/A';
+        
+        // Calculate and display progress
+        const progress = fi.totalFees > 0 ? Math.round((fi.paidAmount / fi.totalFees) * 100) : 0;
+        document.getElementById('viewPaymentProgress').textContent = `${progress}%`;
+        document.getElementById('viewPaymentProgressBar').style.width = `${progress}%`;
+        
+        // Color the balance based on status
+        const balanceEl = document.getElementById('viewBalance');
+        if (fi.balance === 0) {
+            balanceEl.classList.remove('text-amber-700', 'text-rose-700');
+            balanceEl.classList.add('text-emerald-700');
+        } else if (fi.balance > 20000) {
+            balanceEl.classList.remove('text-amber-700', 'text-emerald-700');
+            balanceEl.classList.add('text-rose-700');
+        }
+        
+        // Payment History
+        const historyContainer = document.getElementById('viewPaymentHistory');
+        if (fi.paymentHistory && fi.paymentHistory.length > 0) {
+            historyContainer.innerHTML = fi.paymentHistory.map(payment => `
+                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                            <ion-icon name="cash-outline" class="text-emerald-600"></ion-icon>
+                        </div>
+                        <div>
+                            <p class="font-medium text-slate-900">KES ${payment.amount.toLocaleString()}</p>
+                            <p class="text-xs text-slate-500">${payment.method} • ${payment.reference}</p>
+                        </div>
+                    </div>
+                    <span class="text-sm text-slate-600">${formatDate(payment.date)}</span>
+                </div>
+            `).join('');
+        } else {
+            historyContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">No payment history available</p>';
+        }
+    }
+
+    // Store student ID in modal for export/status update
+    document.getElementById('viewStudentModal').setAttribute('data-student-id', studentId);
+
     // Guardian Information
     document.getElementById('viewGuardianName').textContent = student.guardianName;
     document.getElementById('viewGuardianRelation').textContent = student.guardianRelationship;
@@ -262,7 +357,7 @@ function viewStudentProfile(studentId) {
         docs.push(`
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center gap-2">
-                    <ion-icon name="document-outline" class="text-purple-600"></ion-icon>
+                    <ion-icon name="document-outline" class="text-emerald-600"></ion-icon>
                     <span class="text-sm font-medium">Birth Certificate</span>
                 </div>
                 <span class="text-xs text-slate-500">${formatDate(student.documents.birthCertificate.date)}</span>
@@ -274,7 +369,7 @@ function viewStudentProfile(studentId) {
         docs.push(`
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center gap-2">
-                    <ion-icon name="card-outline" class="text-blue-600"></ion-icon>
+                    <ion-icon name="card-outline" class="text-emerald-600"></ion-icon>
                     <span class="text-sm font-medium">National ID/Passport</span>
                 </div>
                 <span class="text-xs text-slate-500">${formatDate(student.documents.nationalId.date)}</span>
@@ -298,7 +393,7 @@ function viewStudentProfile(studentId) {
         docs.push(`
             <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center gap-2">
-                    <ion-icon name="medical-outline" class="text-rose-600"></ion-icon>
+                    <ion-icon name="medical-outline" class="text-emerald-600"></ion-icon>
                     <span class="text-sm font-medium">Medical Records</span>
                 </div>
                 <span class="text-xs text-slate-500">${formatDate(student.documents.medicalRecords.date)}</span>
@@ -310,6 +405,44 @@ function viewStudentProfile(studentId) {
         documentsList.innerHTML = '<p class="text-sm text-slate-500">No documents uploaded yet</p>';
     } else {
         documentsList.innerHTML = docs.join('');
+    }
+
+    // Populate Status History
+    const statusHistoryContainer = document.getElementById('viewStatusHistory');
+    if (student.statusHistory && student.statusHistory.length > 0) {
+        const sortedHistory = [...student.statusHistory].reverse(); // Show most recent first
+        statusHistoryContainer.innerHTML = sortedHistory.map(entry => {
+            const date = new Date(entry.changedAt);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const statusConfig = studentStatuses[entry.status] || { color: 'slate', label: entry.status };
+            
+            return `
+                <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
+                    <div class="w-8 h-8 rounded-lg bg-${statusConfig.color}-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <ion-icon name="checkmark-circle" class="text-${statusConfig.color}-600"></ion-icon>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 bg-${statusConfig.color}-100 text-${statusConfig.color}-700 text-xs font-semibold rounded-full">
+                                ${entry.status}
+                            </span>
+                            ${entry.previousStatus ? `<span class="text-xs text-slate-500">from ${entry.previousStatus}</span>` : ''}
+                        </div>
+                        <p class="text-xs text-slate-600 mb-1">${entry.note || 'Status updated'}</p>
+                        <p class="text-xs text-slate-500">${formattedDate} • by ${entry.changedBy}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        statusHistoryContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-4">No status history available</p>';
     }
 
     openModal('viewStudentModal');
@@ -488,7 +621,7 @@ function refreshStudentTable() {
                 </td>
                 <td class="px-6 py-4">
                     ${getStatusBadge(student.status)}
-                    ${student.isScholarship ? '<div class="mt-1"><span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase">Scholarship</span></div>' : ''}
+                    ${student.isScholarship ? '<div class="mt-1"><span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase">Scholarship</span></div>' : ''}
                 </td>
                 <td class="px-6 py-4 text-right">
                     <div class="flex items-center justify-end gap-1">
@@ -639,16 +772,164 @@ function filterStudents() {
 }
 
 // ============================================
+// EXPORT INDIVIDUAL STUDENT DATA
+// ============================================
+
+function exportStudentData(studentId) {
+    const student = studentsData.find(s => s.id === studentId);
+    if (!student) {
+        showNotification('Error', 'Student not found', 'error');
+        return;
+    }
+
+    // Create CSV content
+    const csvContent = `Student Data Export - ${student.firstName} ${student.lastName}
+Generated: ${new Date().toLocaleString()}
+
+PERSONAL INFORMATION
+---------------------
+Full Name,${student.firstName} ${student.middleName || ''} ${student.lastName}
+Admission Number,${student.admissionNumber}
+Date of Birth,${student.dateOfBirth}
+Gender,${student.gender}
+National ID/BC No.,${student.nationalId}
+Nationality,${student.nationality}
+
+ACADEMIC INFORMATION
+---------------------
+Current Class,${student.classForm}
+Stream,${student.stream || 'N/A'}
+Admission Date,${student.admissionDate}
+Previous School,${student.previousSchool || 'N/A'}
+Enrollment Status,${student.enrollmentStatus || student.status}
+Scholarship Student,${student.isScholarship ? 'Yes' : 'No'}
+
+GUARDIAN INFORMATION
+---------------------
+Guardian Name,${student.guardianName}
+Relationship,${student.guardianRelationship}
+Phone Number,${student.guardianPhone}
+Email,${student.guardianEmail || 'N/A'}
+Address,${student.guardianAddress || 'N/A'}
+
+MEDICAL INFORMATION
+---------------------
+Blood Group,${student.bloodGroup || 'N/A'}
+Allergies,${student.allergies || 'None'}
+Medical Notes,${student.medicalNotes || 'None'}
+
+FINANCIAL INFORMATION
+---------------------
+Total Fees,KES ${student.financialInfo?.totalFees?.toLocaleString() || '0'}
+Amount Paid,KES ${student.financialInfo?.paidAmount?.toLocaleString() || '0'}
+Balance Due,KES ${student.financialInfo?.balance?.toLocaleString() || '0'}
+Last Payment Date,${student.financialInfo?.lastPayment || 'N/A'}
+Payment Status,${student.financialInfo?.balance === 0 ? 'Fully Paid' : 'Outstanding Balance'}
+`;
+
+    // Demo: Show export success toast instead of download
+    showToast(`Export successful: ${student.firstName} ${student.lastName}'s data`, 'success', 2000);
+}
+
+// Export all students data
+function exportAllStudentsData() {
+    let csvContent = 'Admission No,First Name,Last Name,Class,Status,Total Fees,Paid Amount,Balance,Guardian Name,Guardian Phone\n';
+    
+    studentsData.forEach(student => {
+        csvContent += `${student.admissionNumber},${student.firstName},${student.lastName},${student.classForm},${student.status},${student.financialInfo?.totalFees || 0},${student.financialInfo?.paidAmount || 0},${student.financialInfo?.balance || 0},${student.guardianName},${student.guardianPhone}\n`;
+    });
+
+    // Demo: Show export success toast instead of download
+    showToast('Export successful: All student data exported', 'success', 2000);
+}
+
+// ============================================
+// UPDATE STUDENT STATUS
+// ============================================
+
+function updateStudentStatus(studentId, newStatus, note = '') {
+    const student = studentsData.find(s => s.id === studentId);
+    if (!student) return;
+
+    const oldStatus = student.status;
+    
+    // Don't update if status is the same
+    if (oldStatus === newStatus) {
+        showToast('Status unchanged', 'info', 2000);
+        return;
+    }
+    
+    student.status = newStatus;
+    student.enrollmentStatus = newStatus;
+    student.statusLastChanged = new Date().toISOString().split('T')[0];
+
+    // Add to status history
+    if (!student.statusHistory) {
+        student.statusHistory = [];
+    }
+    
+    student.statusHistory.push({
+        status: newStatus,
+        changedAt: new Date().toISOString(),
+        changedBy: 'Demo User',
+        previousStatus: oldStatus,
+        note: note || `Status changed from ${oldStatus} to ${newStatus}`
+    });
+
+    showNotification('Status Updated', 
+        `${student.firstName}'s status changed from ${oldStatus} to ${newStatus}`, 
+        'success');
+
+    refreshStudentTable();
+    
+    // If viewing the student profile, update it
+    if (!document.getElementById('viewStudentModal').classList.contains('hidden')) {
+        viewStudentProfile(studentId);
+    }
+}
+
+// Get status badge HTML
+function getStatusBadge(status) {
+    const statusConfig = studentStatuses[status] || { color: 'slate', label: status };
+    return `<span class="px-2.5 py-1 bg-${statusConfig.color}-100 text-${statusConfig.color}-700 text-xs font-semibold rounded-full">${statusConfig.label}</span>`;
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
+// Initialize status history for existing students (migration)
+function initializeStatusHistory() {
+    studentsData.forEach(student => {
+        // Add statusHistory if it doesn't exist
+        if (!student.statusHistory) {
+            student.statusHistory = [
+                {
+                    status: student.status || 'Active',
+                    changedAt: student.admissionDate || new Date().toISOString().split('T')[0],
+                    changedBy: 'System',
+                    note: 'Initial enrollment'
+                }
+            ];
+        }
+        // Add statusLastChanged if it doesn't exist
+        if (!student.statusLastChanged) {
+            student.statusLastChanged = student.admissionDate || new Date().toISOString().split('T')[0];
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize status history for all students
+    initializeStatusHistory();
+    
     // Initialize search and filters
     initializeSearchAndFilter();
 
     // Initial table load
-    refreshStudentTable();
+    // refreshStudentTable(); // Commented out to use hardcoded HTML data
 
     console.log('Student Records Management System Initialized');
     console.log(`Total Students: ${studentsData.length}`);
+    console.log('Available statuses:', Object.keys(studentStatuses).join(', '));
 });

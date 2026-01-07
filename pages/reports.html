@@ -29,7 +29,7 @@
         <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
+                    <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200 text-xl">
                         <ion-icon name="school-outline"></ion-icon>
                     </div>
                     <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
@@ -48,7 +48,7 @@
                 </div>
 
                 <nav class="space-y-1">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+                    <p class="text-xs uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
                     <a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
                         <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
                     </a>
@@ -66,38 +66,490 @@
         </aside>
 
         <main class="flex-1 bg-[#f8fafc] p-4 md:p-8 overflow-y-auto h-screen">
-            <header class="flex items-center justify-between mb-8">
+            <header class="flex items-center justify-between mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold">School Reports</h1>
-                    <p class="text-slate-500 text-sm">Deep dive into financial and academic analytics.</p>
+                    <h1 class="text-2xl font-bold">School Reports & Analytics</h1>
+                    <p class="text-slate-500 text-sm">Financial reports, audit logs, and export tools • <span id="currentDate">January 7, 2026</span></p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-50">Export PDF</button>
-                    <button class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-semibold hover:bg-slate-50">Filter Date</button>
+                    <button onclick="openExportModal()" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-emerald-200 flex items-center gap-2">
+                        <ion-icon name="download-outline" class="text-lg"></ion-icon>
+                        Export Center
+                    </button>
                 </div>
             </header>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card p-6 rounded-[2rem]">
-                    <h3 class="font-bold text-lg mb-2">Revenue Distribution</h3>
-                    <p class="text-xs text-slate-400 mb-6">Breakdown of income sources</p>
-                    <div class="h-64 flex items-center justify-center">
-                        <canvas id="revenueReportChart"></canvas>
+            <!-- Tab Navigation -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-1.5 mb-6 inline-flex gap-1">
+                <button onclick="switchReportTab('bursarsDaily', event)" class="report-tab active px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2">
+                    <ion-icon name="cash-outline"></ion-icon>
+                    Bursar's Daily
+                </button>
+                <button onclick="switchReportTab('defaulters', event)" class="report-tab px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2">
+                    <ion-icon name="alert-circle-outline"></ion-icon>
+                    Defaulters List
+                    <span class="bg-rose-100 text-rose-700 text-xs px-2 py-0.5 rounded-full font-semibold">45</span>
+                </button>
+                <button onclick="switchReportTab('auditLog', event)" class="report-tab px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2">
+                    <ion-icon name="shield-checkmark-outline"></ion-icon>
+                    Audit Log
+                </button>
+                <button onclick="switchReportTab('analytics', event)" class="report-tab px-5 py-2.5 rounded-xl text-sm font-medium flex items-center gap-2">
+                    <ion-icon name="bar-chart-outline"></ion-icon>
+                    Analytics
+                </button>
+            </div>
+
+            <!-- TAB 1: BURSAR'S DAILY REPORT -->
+            <div id="bursarsDaily" class="report-tab-content">
+                <div class="grid grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold text-slate-600">Cash Payments</span>
+                            <ion-icon name="cash" class="text-2xl text-emerald-500"></ion-icon>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">KES 145,000</p>
+                        <p class="text-xs text-slate-500 mt-1">12 transactions</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold text-slate-600">M-Pesa</span>
+                            <ion-icon name="phone-portrait" class="text-2xl text-blue-500"></ion-icon>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">KES 280,000</p>
+                        <p class="text-xs text-slate-500 mt-1">28 transactions</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold text-slate-600">Bank Transfer</span>
+                            <ion-icon name="business" class="text-2xl text-purple-500"></ion-icon>
+                        </div>
+                        <p class="text-2xl font-bold text-slate-900">KES 195,000</p>
+                        <p class="text-xs text-slate-500 mt-1">8 transactions</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl border border-emerald-400 p-5 text-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold">Today's Total</span>
+                            <ion-icon name="trending-up" class="text-2xl"></ion-icon>
+                        </div>
+                        <p class="text-2xl font-bold">KES 620,000</p>
+                        <p class="text-xs opacity-90 mt-1">48 total transactions</p>
                     </div>
                 </div>
 
-                <div class="glass-card p-6 rounded-[2rem]">
-                    <h3 class="font-bold text-lg mb-2">Academic Performance</h3>
-                    <p class="text-xs text-slate-400 mb-6">Average class performance by Form</p>
-                    <div class="h-64">
-                        <canvas id="performanceReportChart"></canvas>
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden mb-6">
+                    <div class="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold text-slate-900">Today's Payments</h3>
+                            <p class="text-xs text-slate-500 mt-1">All payments received on <span id="todayDateDisplay">January 7, 2026</span></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="refreshBursarsDaily()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors flex items-center gap-1">
+                                <ion-icon name="refresh-outline"></ion-icon>
+                                Refresh
+                            </button>
+                            <button onclick="exportBursarsDaily()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-1">
+                                <ion-icon name="download-outline"></ion-icon>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b border-slate-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Time</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Receipt No.</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Student/Payer</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Class</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Payment Method</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase">Amount</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Received By</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50" id="bursarsDailyTableBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                            <tfoot class="bg-emerald-50 border-t-2 border-emerald-200">
+                                <tr>
+                                    <td colspan="5" class="px-6 py-4 font-bold text-slate-900">TOTAL RECEIVED TODAY</td>
+                                    <td class="px-6 py-4 text-right font-bold text-emerald-600 text-lg font-mono">KES 620,000</td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: DEFAULTERS LIST -->
+            <div id="defaulters" class="report-tab-content hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Fee Defaulters Report</h3>
+                        <p class="text-sm text-slate-500">Students with outstanding fee balances</p>
+                    </div>
+                    <button onclick="exportDefaultersList()" class="px-4 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors shadow-lg shadow-rose-200">
+                        <ion-icon name="download-outline" class="text-lg"></ion-icon>
+                        Export List
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-6 flex items-center gap-4">
+                    <div class="flex items-center gap-2 flex-1">
+                        <ion-icon name="filter-outline" class="text-xl text-slate-400"></ion-icon>
+                        <span class="text-sm font-semibold text-slate-600">Filters:</span>
+                    </div>
+                    <select id="defaultersClassFilter" onchange="filterDefaulters()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30">
+                        <option value="">All Classes</option>
+                        <option value="Form 1">Form 1</option>
+                        <option value="Form 2">Form 2</option>
+                        <option value="Form 3">Form 3</option>
+                        <option value="Form 4">Form 4</option>
+                    </select>
+                    <select id="defaultersAmountFilter" onchange="filterDefaulters()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30">
+                        <option value="">All Amounts</option>
+                        <option value="10000">Above KES 10,000</option>
+                        <option value="25000">Above KES 25,000</option>
+                        <option value="50000">Above KES 50,000</option>
+                    </select>
+                    <select id="defaultersDurationFilter" onchange="filterDefaulters()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30">
+                        <option value="">All Durations</option>
+                        <option value="30">Overdue 30+ days</option>
+                        <option value="60">Overdue 60+ days</option>
+                        <option value="90">Overdue 90+ days</option>
+                    </select>
+                    <button onclick="clearDefaultersFilters()" class="px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium hover:bg-slate-50 transition-colors">
+                        Clear Filters
+                    </button>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-4 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <span class="text-sm font-semibold text-slate-600">Total Defaulters</span>
+                        <p class="text-3xl font-bold text-slate-900 mt-2">45</p>
+                        <p class="text-xs text-slate-500 mt-1">Out of 1,569 students</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <span class="text-sm font-semibold text-slate-600">Total Outstanding</span>
+                        <p class="text-3xl font-bold text-rose-600 mt-2">KES 1.2M</p>
+                        <p class="text-xs text-slate-500 mt-1">3.4% of expected revenue</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <span class="text-sm font-semibold text-slate-600">Critical (90+ days)</span>
+                        <p class="text-3xl font-bold text-amber-600 mt-2">12</p>
+                        <p class="text-xs text-slate-500 mt-1">Require immediate action</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5">
+                        <span class="text-sm font-semibold text-slate-600">Avg. Outstanding</span>
+                        <p class="text-3xl font-bold text-slate-900 mt-2">KES 26.6K</p>
+                        <p class="text-xs text-slate-500 mt-1">Per defaulter</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-semibold text-slate-900">Defaulters List</h3>
+                        <p class="text-xs text-slate-500 mt-1">Students with outstanding fee balances</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b border-slate-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Student Name</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Adm No.</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Class</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase">Total Fees</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase">Paid</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase">Outstanding</th>
+                                    <th class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase">Days Overdue</th>
+                                    <th class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50" id="defaultersTableBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: AUDIT LOG -->
+            <div id="auditLog" class="report-tab-content hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Financial Audit Log</h3>
+                        <p class="text-sm text-slate-500">Track all fee edits and receipt voids for fraud prevention</p>
+                    </div>
+                    <button onclick="exportAuditLog()" class="px-4 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors shadow-lg shadow-purple-200">
+                        <ion-icon name="shield-checkmark-outline" class="text-lg"></ion-icon>
+                        Export Audit Log
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-6">
+                    <div class="grid grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Action Type</label>
+                            <select id="auditActionFilter" onchange="filterAuditLog()" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30">
+                                <option value="">All Actions</option>
+                                <option value="FEE_EDITED">Fee Edited</option>
+                                <option value="RECEIPT_VOIDED">Receipt Voided</option>
+                                <option value="PAYMENT_RECORDED">Payment Recorded</option>
+                                <option value="INVOICE_CREATED">Invoice Created</option>
+                                <option value="INVOICE_DELETED">Invoice Deleted</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Date From</label>
+                            <input type="date" id="auditDateFrom" onchange="filterAuditLog()" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Date To</label>
+                            <input type="date" id="auditDateTo" onchange="filterAuditLog()" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Performed By</label>
+                            <select id="auditUserFilter" onchange="filterAuditLog()" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30">
+                                <option value="">All Users</option>
+                                <option value="Principal">Principal</option>
+                                <option value="Bursar">Bursar</option>
+                                <option value="Accountant">Accountant</option>
+                            </select>
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="clearAuditFilters()" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+                                Clear Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-5 gap-4 mb-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4">
+                        <span class="text-xs font-semibold text-slate-600">Total Actions</span>
+                        <p class="text-2xl font-bold text-slate-900 mt-1">1,247</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4">
+                        <span class="text-xs font-semibold text-slate-600">Fees Edited</span>
+                        <p class="text-2xl font-bold text-blue-600 mt-1">45</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4">
+                        <span class="text-xs font-semibold text-slate-600">Receipts Voided</span>
+                        <p class="text-2xl font-bold text-rose-600 mt-1">8</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4">
+                        <span class="text-xs font-semibold text-slate-600">This Month</span>
+                        <p class="text-2xl font-bold text-emerald-600 mt-1">156</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-slate-200 p-4">
+                        <span class="text-xs font-semibold text-slate-600">Today</span>
+                        <p class="text-2xl font-bold text-purple-600 mt-1">12</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-semibold text-slate-900">Activity Log</h3>
+                        <p class="text-xs text-slate-500 mt-1">Chronological record of all financial actions</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50 border-b border-slate-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Timestamp</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Action</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Description</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">User</th>
+                                    <th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase">Reference</th>
+                                    <th class="px-6 py-4 text-center text-xs font-semibold text-slate-500 uppercase">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50" id="auditLogTableBody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: ANALYTICS -->
+            <div id="analytics" class="report-tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                        <h3 class="font-bold text-lg mb-2">Revenue Distribution</h3>
+                        <p class="text-xs text-slate-400 mb-6">Breakdown of income sources</p>
+                        <div class="h-64 flex items-center justify-center">
+                            <canvas id="revenueReportChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                        <h3 class="font-bold text-lg mb-2">Payment Methods</h3>
+                        <p class="text-xs text-slate-400 mb-6">Distribution by payment method</p>
+                        <div class="h-64">
+                            <canvas id="paymentMethodsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                        <h3 class="font-bold text-lg mb-2">Collection Trends</h3>
+                        <p class="text-xs text-slate-400 mb-6">Monthly collection performance</p>
+                        <div class="h-64">
+                            <canvas id="collectionTrendsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                        <h3 class="font-bold text-lg mb-2">Outstanding by Class</h3>
+                        <p class="text-xs text-slate-400 mb-6">Fee arrears breakdown</p>
+                        <div class="h-64">
+                            <canvas id="outstandingByClassChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- EXPORT CENTER MODAL -->
+    <div id="exportModal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="sticky top-0 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-6 py-4 rounded-t-2xl flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-white/20 rounded-xl">
+                        <ion-icon name="download" class="text-2xl"></ion-icon>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">Export Center</h3>
+                        <p class="text-sm text-emerald-50">Download reports for board meetings and audits</p>
+                    </div>
+                </div>
+                <button onclick="closeExportModal()" class="p-2 hover:bg-white/20 rounded-xl transition-colors">
+                    <ion-icon name="close" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6">
+                <!-- Date Range Section -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <ion-icon name="calendar-outline" class="text-xl text-emerald-500"></ion-icon>
+                        <label class="text-sm font-semibold text-slate-700">Date Range</label>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-600 mb-2">From Date</label>
+                            <input type="date" id="exportDateFrom" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-600 mb-2">To Date</label>
+                            <input type="date" id="exportDateTo" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Selection Section -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <ion-icon name="document-text-outline" class="text-xl text-emerald-500"></ion-icon>
+                        <label class="text-sm font-semibold text-slate-700">Select Reports</label>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input type="checkbox" id="exportBursarsDaily" class="w-5 h-5 text-emerald-500 rounded focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">Bursar's Daily Report</span>
+                                <p class="text-xs text-slate-500">Today's payment transactions and cash-up summary</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input type="checkbox" id="exportDefaulters" class="w-5 h-5 text-emerald-500 rounded focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">Defaulters List</span>
+                                <p class="text-xs text-slate-500">Students with outstanding fee balances</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input type="checkbox" id="exportAuditLog" class="w-5 h-5 text-emerald-500 rounded focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">Financial Audit Log</span>
+                                <p class="text-xs text-slate-500">Complete history of fee edits and voided receipts</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 border border-slate-200 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+                            <input type="checkbox" id="exportFinancialSummary" class="w-5 h-5 text-emerald-500 rounded focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">Financial Summary Report</span>
+                                <p class="text-xs text-slate-500">Comprehensive revenue, expenses, and analytics</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Export Format Section -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-2 mb-3">
+                        <ion-icon name="document-attach-outline" class="text-xl text-emerald-500"></ion-icon>
+                        <label class="text-sm font-semibold text-slate-700">Export Format</label>
+                    </div>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 p-3 border-2 border-emerald-500 bg-emerald-50 rounded-xl cursor-pointer flex-1">
+                            <input type="radio" name="exportFormat" value="csv" checked class="w-4 h-4 text-emerald-500 focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">CSV</span>
+                                <p class="text-xs text-slate-500">Excel-compatible format</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-2 p-3 border-2 border-slate-200 rounded-xl hover:border-emerald-300 hover:bg-emerald-50/50 cursor-pointer flex-1 transition-colors">
+                            <input type="radio" name="exportFormat" value="pdf" class="w-4 h-4 text-emerald-500 focus:ring-2 focus:ring-emerald-500/30">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-900">PDF</span>
+                                <p class="text-xs text-slate-500">Print-ready document</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                    <div class="flex items-start gap-3">
+                        <ion-icon name="information-circle" class="text-2xl text-blue-500 flex-shrink-0 mt-0.5"></ion-icon>
+                        <div>
+                            <p class="text-sm font-medium text-blue-900 mb-1">Export Guidelines</p>
+                            <ul class="text-xs text-blue-700 space-y-1">
+                                <li>• CSV files can be opened in Excel, Google Sheets, or any spreadsheet software</li>
+                                <li>• PDF files are ideal for printing and formal submissions to the board</li>
+                                <li>• All exports are timestamped with generation date and time</li>
+                                <li>• Sensitive data is included - handle exported files securely</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="closeExportModal()" class="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-xl font-semibold hover:bg-slate-50 transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="exportReports()" class="flex-1 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-colors shadow-lg shadow-emerald-200 flex items-center justify-center gap-2">
+                        <ion-icon name="download-outline" class="text-xl"></ion-icon>
+                        Export Reports
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/navigation.js"></script>
     <script src="../assets/js/modals.js"></script>
     <script src="../assets/js/charts.js"></script>
+    <script src="../assets/js/reports.js"></script>
 </body>
 </html>

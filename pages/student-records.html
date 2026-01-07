@@ -29,8 +29,7 @@
         <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
-                        <ion-icon name="school-outline"></ion-icon>
+                    <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200 text-xl">
                     </div>
                     <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
                 </div>
@@ -48,7 +47,7 @@
                 </div>
 
                 <nav class="space-y-1">
-                    <p class="text-[10px] uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+                    <p class="text-xs uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
                     <a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
                         <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
                     </a>
@@ -77,7 +76,7 @@
                 <div class="flex flex-col md:flex-row gap-4 mb-6">
                     <div class="relative flex-1">
                         <ion-icon name="search-outline" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></ion-icon>
-                        <input type="text" placeholder="Search by name, admission no..." class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/20">
+                        <input type="text" placeholder="Search by name, admission no..." class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-500/20">
                     </div>
                     <select class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none min-w-[150px]">
                         <option value="">All Grades</option>
@@ -86,13 +85,22 @@
                         <option>Form 3</option>
                         <option>Form 4</option>
                     </select>
-                    <select class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none min-w-[150px]">
-                        <option value="">Status</option>
-                        <option>Active</option>
-                        <option>On Leave</option>
-                        <option>Graduated</option>
+                    <select class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none min-w-[180px]">
+                        <option value="">All Statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="On Leave">On Leave</option>
+                        <option value="Suspended">Suspended</option>
+                        <option value="Deferred">Deferred</option>
+                        <option value="Graduated">Graduated</option>
+                        <option value="Alumni">Alumni</option>
+                        <option value="Transferred">Transferred</option>
+                        <option value="Withdrawn">Withdrawn</option>
                     </select>
-                    <button onclick="openAddStudentModal()" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 flex items-center gap-2">
+                    <button onclick="exportAllStudentsData()" class="px-4 py-3 bg-slate-100 text-slate-700 font-semibold rounded-2xl hover:bg-slate-200 transition-colors flex items-center gap-2" title="Export All Students">
+                        <ion-icon name="download-outline" class="text-lg"></ion-icon>
+                        Export
+                    </button>
+                    <button onclick="openAddStudentModal()" class="px-6 py-3 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200 flex items-center gap-2">
                         <ion-icon name="person-add-outline" class="text-lg"></ion-icon>
                         Add Student
                     </button>
@@ -133,18 +141,18 @@
                                 <td class="px-6 py-4">
                                     <span class="badge-success">ACTIVE</span>
                                     <div class="mt-1">
-                                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase">Scholarship</span>
+                                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase">Scholarship</span>
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex items-center justify-end gap-1">
-                                        <button onclick="viewStudentProfile('STU-001')" class="p-2 hover:bg-blue-100 rounded-lg text-slate-400 hover:text-blue-600 transition-colors" title="View Profile">
+                                        <button onclick="viewStudentProfile('STU-001')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
                                             <ion-icon name="eye-outline" class="text-lg"></ion-icon>
                                         </button>
                                         <button onclick="openEditStudentModal('STU-001')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
                                             <ion-icon name="create-outline" class="text-lg"></ion-icon>
                                         </button>
-                                        <button onclick="openDocumentUploadModal('STU-001')" class="p-2 hover:bg-purple-100 rounded-lg text-slate-400 hover:text-purple-600 transition-colors" title="Upload Documents">
+                                        <button onclick="openDocumentUploadModal('STU-001')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
                                             <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
                                         </button>
                                     </div>
@@ -174,13 +182,304 @@
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex items-center justify-end gap-1">
-                                        <button onclick="viewStudentProfile('STU-002')" class="p-2 hover:bg-blue-100 rounded-lg text-slate-400 hover:text-blue-600 transition-colors" title="View Profile">
+                                        <button onclick="viewStudentProfile('STU-002')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
                                             <ion-icon name="eye-outline" class="text-lg"></ion-icon>
                                         </button>
                                         <button onclick="openEditStudentModal('STU-002')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
                                             <ion-icon name="create-outline" class="text-lg"></ion-icon>
                                         </button>
-                                        <button onclick="openDocumentUploadModal('STU-002')" class="p-2 hover:bg-purple-100 rounded-lg text-slate-400 hover:text-purple-600 transition-colors" title="Upload Documents">
+                                        <button onclick="openDocumentUploadModal('STU-002')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">MK</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Mary Kamau</div>
+                                            <div class="text-xs text-slate-500">Female</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2024-045</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 2-A</div>
+                                    <div class="text-xs text-slate-500">Business Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Peter Kamau</div>
+                                    <div>+254 733 567 890</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-003')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-003')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-003')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-xs">JO</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">John Ochieng</div>
+                                            <div class="text-xs text-slate-500">Male</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2025-018</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 1-B</div>
+                                    <div class="text-xs text-slate-500">Science Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Grace Ochieng</div>
+                                    <div>+254 744 678 901</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-004')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-004')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-004')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">GW</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Grace Wanjiru</div>
+                                            <div class="text-xs text-slate-500">Female</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-134</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 3-A</div>
+                                    <div class="text-xs text-slate-500">Science Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Daniel Wanjiru</div>
+                                    <div>+254 755 789 012</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                    <div class="mt-1">
+                                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase">Scholarship</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-005')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-005')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-005')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xs">PN</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Peter Njoroge</div>
+                                            <div class="text-xs text-slate-500">Male</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-098</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 4-B</div>
+                                    <div class="text-xs text-slate-500">Arts Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Lucy Njoroge</div>
+                                    <div>+254 766 890 123</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-006')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-006')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-006')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">SM</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Sarah Mutua</div>
+                                            <div class="text-xs text-slate-500">Female</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2024-067</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 2-B</div>
+                                    <div class="text-xs text-slate-500">Business Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">David Mutua</div>
+                                    <div>+254 777 901 234</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-007')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-007')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-007')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center font-bold text-xs">DC</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">David Chebet</div>
+                                            <div class="text-xs text-slate-500">Male</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2025-023</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 1-A</div>
+                                    <div class="text-xs text-slate-500">Arts Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Ruth Chebet</div>
+                                    <div>+254 788 012 345</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-008')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-008')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-008')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs">LK</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Lucy Kimani</div>
+                                            <div class="text-xs text-slate-500">Female</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-145</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 3-B</div>
+                                    <div class="text-xs text-slate-500">Science Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Joseph Kimani</div>
+                                    <div>+254 799 123 456</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-009')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-009')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-009')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-lime-100 text-lime-600 flex items-center justify-center font-bold text-xs">DO</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Daniel Otieno</div>
+                                            <div class="text-xs text-slate-500">Male</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-076</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 4-A</div>
+                                    <div class="text-xs text-slate-500">Science Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Mary Otieno</div>
+                                    <div>+254 700 234 567</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-010')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-010')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-010')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Upload Documents">
                                             <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
                                         </button>
                                     </div>
@@ -212,33 +511,33 @@
                 <!-- Personal Information -->
                 <div class="mb-6">
                     <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <ion-icon name="person-outline" class="text-xl text-blue-600"></ion-icon>
+                        <ion-icon name="person-outline" class="text-xl text-emerald-600"></ion-icon>
                         Personal Information
                     </h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">First Name *</label>
-                            <input type="text" id="firstName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="firstName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Last Name *</label>
-                            <input type="text" id="lastName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="lastName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Middle Name</label>
-                            <input type="text" id="middleName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="middleName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Admission Number *</label>
-                            <input type="text" id="admissionNumber" required placeholder="ADM-2026-XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="admissionNumber" required placeholder="ADM-2026-XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth *</label>
-                            <input type="date" id="dateOfBirth" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="date" id="dateOfBirth" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Gender *</label>
-                            <select id="gender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <select id="gender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                                 <option value="">Select gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -246,11 +545,11 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">National ID / Birth Certificate No *</label>
-                            <input type="text" id="nationalId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="nationalId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Nationality</label>
-                            <input type="text" id="nationality" value="Kenyan" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                            <input type="text" id="nationality" value="Kenyan" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                     </div>
                 </div>
@@ -314,17 +613,17 @@
                 <!-- Parent/Guardian Information -->
                 <div class="mb-6 border-t border-slate-200 pt-6">
                     <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <ion-icon name="people-outline" class="text-xl text-purple-600"></ion-icon>
+                        <ion-icon name="people-outline" class="text-xl text-emerald-600"></ion-icon>
                         Parent/Guardian Information
                     </h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Guardian Name *</label>
-                            <input type="text" id="guardianName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                            <input type="text" id="guardianName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Relationship</label>
-                            <select id="guardianRelationship" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                            <select id="guardianRelationship" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                                 <option value="Father">Father</option>
                                 <option value="Mother">Mother</option>
                                 <option value="Guardian">Guardian</option>
@@ -333,11 +632,11 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number *</label>
-                            <input type="tel" id="guardianPhone" required placeholder="+254 XXX XXX XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                            <input type="tel" id="guardianPhone" required placeholder="+254 XXX XXX XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
-                            <input type="email" id="guardianEmail" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                            <input type="email" id="guardianEmail" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div class="col-span-2">
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Physical Address</label>
@@ -349,13 +648,13 @@
                 <!-- Medical Information -->
                 <div class="mb-6 border-t border-slate-200 pt-6">
                     <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                        <ion-icon name="medical-outline" class="text-xl text-emerald-600"></ion-icon>
                         Medical Information
                     </h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Blood Group</label>
-                            <select id="bloodGroup" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                            <select id="bloodGroup" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                                 <option value="">Select blood group</option>
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
@@ -369,11 +668,11 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Allergies</label>
-                            <input type="text" id="allergies" placeholder="None, or list allergies" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                            <input type="text" id="allergies" placeholder="None, or list allergies" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
                         </div>
                         <div class="col-span-2">
                             <label class="block text-sm font-semibold text-slate-700 mb-2">Medical Conditions / Notes</label>
-                            <textarea id="medicalNotes" rows="2" placeholder="Any medical conditions or special requirements" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500"></textarea>
+                            <textarea id="medicalNotes" rows="2" placeholder="Any medical conditions or special requirements" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500"></textarea>
                         </div>
                     </div>
                 </div>
@@ -382,7 +681,7 @@
                     <button type="button" onclick="closeModal('addStudentModal')" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-colors">
                         Cancel
                     </button>
-                    <button type="button" onclick="submitAddStudent()" class="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-blue-200">
+                    <button type="button" onclick="submitAddStudent()" class="flex-1 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-emerald-200">
                         Add Student
                     </button>
                 </div>
@@ -574,8 +873,8 @@
 
     <!-- Document Upload Modal -->
     <div id="documentUploadModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
-            <div class="border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
                 <div>
                     <h3 class="text-lg font-bold text-slate-900">Upload Student Documents</h3>
                     <p class="text-sm text-slate-500 mt-1">Upload identification and supporting documents</p>
@@ -586,9 +885,9 @@
             </div>
             
             <div class="p-6">
-                <div class="mb-6 p-4 bg-blue-50 rounded-xl">
+                <div class="mb-6 p-4 bg-emerald-50 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <ion-icon name="information-circle" class="text-2xl text-blue-600 flex-shrink-0"></ion-icon>
+                        <ion-icon name="information-circle" class="text-2xl text-emerald-600 flex-shrink-0"></ion-icon>
                         <div>
                             <p class="font-semibold text-slate-900 mb-1">Student: <span id="uploadStudentName">Faith Kipchoge</span></p>
                             <p class="text-sm text-slate-600">Admission No: <span id="uploadAdmissionNo" class="font-mono">ADM-2023-089</span></p>
@@ -601,8 +900,8 @@
                     <div class="border border-slate-200 rounded-xl p-4">
                         <div class="flex items-center justify-between mb-3">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
-                                    <ion-icon name="document-outline" class="text-xl text-purple-600"></ion-icon>
+                                <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center">
+                                    <ion-icon name="document-outline" class="text-xl text-emerald-600"></ion-icon>
                                 </div>
                                 <div>
                                     <h5 class="font-semibold text-slate-900">Birth Certificate</h5>
@@ -613,7 +912,7 @@
                         </div>
                         <div class="relative">
                             <input type="file" id="birthCertFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect('birthCert', this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-purple-400 hover:bg-purple-50/50 transition-all">
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-emerald-400 hover:bg-emerald-50/50 transition-all">
                                 <ion-icon name="cloud-upload-outline" class="text-4xl text-slate-400 mb-2"></ion-icon>
                                 <p class="text-sm text-slate-600">Click to upload or drag and drop</p>
                             </div>
@@ -741,7 +1040,7 @@
     <!-- View Student Profile Modal -->
     <div id="viewStudentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-            <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8 text-white z-10">
+            <div class="sticky top-0 bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-8 text-white z-10">
                 <button onclick="closeModal('viewStudentModal')" class="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors">
                     <ion-icon name="close" class="text-2xl"></ion-icon>
                 </button>
@@ -764,18 +1063,85 @@
                                 <ion-icon name="star"></ion-icon> SCHOLARSHIP
                             </span>
                         </div>
+                        <!-- Export and Status buttons -->
+                        <div class="flex items-center gap-2 mt-4">
+                            <button onclick="exportStudentData(document.getElementById('viewStudentModal').getAttribute('data-student-id'))" class="px-3 py-1.5 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium flex items-center gap-1 transition-colors">
+                                <ion-icon name="download-outline"></ion-icon>
+                                Export Data
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="p-6 space-y-6">
-                <!-- Personal Information -->
-                <div>
+                <!-- Tab Navigation -->
+                <div class="flex gap-1 p-1 bg-slate-100 rounded-xl">
+                    <button onclick="switchStudentTab('financial')" class="student-profile-tab active flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors" data-tab="financial">
+                        <ion-icon name="wallet-outline" class="mr-1"></ion-icon>
+                        Financial Info
+                    </button>
+                    <button onclick="switchStudentTab('personal')" class="student-profile-tab flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors" data-tab="personal">
+                        <ion-icon name="person-outline" class="mr-1"></ion-icon>
+                        Personal
+                    </button>
+                    <button onclick="switchStudentTab('academic')" class="student-profile-tab flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors" data-tab="academic">
+                        <ion-icon name="school-outline" class="mr-1"></ion-icon>
+                        Academic
+                    </button>
+                    <button onclick="switchStudentTab('documents')" class="student-profile-tab flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors" data-tab="documents">
+                        <ion-icon name="document-outline" class="mr-1"></ion-icon>
+                        Documents
+                    </button>
+                </div>
+
+                <!-- FINANCIAL INFORMATION TAB (Primary Focus) -->
+                <div id="studentTab-financial" class="student-tab-content">
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <p class="text-xs text-emerald-600 font-semibold uppercase mb-1">Total Fees</p>
+                            <p class="text-2xl font-bold text-slate-900" id="viewTotalFees">KES 82,500</p>
+                        </div>
+                        <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <p class="text-xs text-emerald-600 font-semibold uppercase mb-1">Amount Paid</p>
+                            <p class="text-2xl font-bold text-emerald-700" id="viewPaidAmount">KES 82,500</p>
+                        </div>
+                        <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                            <p class="text-xs text-amber-600 font-semibold uppercase mb-1">Balance Due</p>
+                            <p class="text-2xl font-bold text-amber-700" id="viewBalance">KES 0</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <p class="text-xs text-slate-600 font-semibold uppercase mb-1">Last Payment</p>
+                            <p class="text-2xl font-bold text-slate-900" id="viewLastPayment">Jan 5, 2026</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-semibold text-slate-700">Payment Progress</span>
+                            <span class="text-sm font-bold text-emerald-600" id="viewPaymentProgress">100%</span>
+                        </div>
+                        <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
+                            <div id="viewPaymentProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full transition-all" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                        <ion-icon name="receipt-outline" class="text-emerald-600"></ion-icon>
+                        Payment History
+                    </h5>
+                    <div id="viewPaymentHistory" class="space-y-2 max-h-48 overflow-y-auto">
+                        <!-- Payment history populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Personal Information Tab -->
+                <div id="studentTab-personal" class="student-tab-content hidden">
                     <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
-                        <ion-icon name="person-outline" class="text-xl text-blue-600"></ion-icon>
+                        <ion-icon name="person-outline" class="text-xl text-emerald-600"></ion-icon>
                         Personal Information
                     </h4>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="grid grid-cols-2 gap-4 text-sm mb-6">
                         <div>
                             <span class="text-slate-500">Full Name:</span>
                             <p class="font-medium text-slate-900" id="viewFullName"></p>
@@ -793,41 +1159,12 @@
                             <p class="font-medium text-slate-900" id="viewNationalId"></p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Academic Information -->
-                <div>
                     <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
-                        <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
-                        Academic Information
-                    </h4>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                            <span class="text-slate-500">Current Class:</span>
-                            <p class="font-medium text-slate-900" id="viewCurrentClass"></p>
-                        </div>
-                        <div>
-                            <span class="text-slate-500">Stream:</span>
-                            <p class="font-medium text-slate-900" id="viewStream"></p>
-                        </div>
-                        <div>
-                            <span class="text-slate-500">Admission Date:</span>
-                            <p class="font-medium text-slate-900" id="viewAdmissionDate"></p>
-                        </div>
-                        <div>
-                            <span class="text-slate-500">Status:</span>
-                            <p class="font-medium text-slate-900" id="viewStatus"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Guardian Information -->
-                <div>
-                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
-                        <ion-icon name="people-outline" class="text-xl text-purple-600"></ion-icon>
+                        <ion-icon name="people-outline" class="text-xl text-emerald-600"></ion-icon>
                         Parent/Guardian Information
                     </h4>
-                    <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div class="grid grid-cols-2 gap-4 text-sm mb-6">
                         <div>
                             <span class="text-slate-500">Guardian Name:</span>
                             <p class="font-medium text-slate-900" id="viewGuardianName"></p>
@@ -845,12 +1182,9 @@
                             <p class="font-medium text-slate-900" id="viewGuardianEmail"></p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Medical Information -->
-                <div>
                     <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
-                        <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                        <ion-icon name="medical-outline" class="text-xl text-emerald-600"></ion-icon>
                         Medical Information
                     </h4>
                     <div class="grid grid-cols-2 gap-4 text-sm">
@@ -869,10 +1203,65 @@
                     </div>
                 </div>
 
-                <!-- Documents -->
-                <div>
+                <!-- Academic Information Tab -->
+                <div id="studentTab-academic" class="student-tab-content hidden">
                     <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
-                        <ion-icon name="document-attach-outline" class="text-xl text-amber-600"></ion-icon>
+                        <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Academic Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm mb-6">
+                        <div>
+                            <span class="text-slate-500">Current Class:</span>
+                            <p class="font-medium text-slate-900" id="viewCurrentClass"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Stream:</span>
+                            <p class="font-medium text-slate-900" id="viewStream"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Admission Date:</span>
+                            <p class="font-medium text-slate-900" id="viewAdmissionDate"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Enrollment Status:</span>
+                            <p class="font-medium text-slate-900" id="viewStatus"></p>
+                        </div>
+                    </div>
+
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="settings-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Update Enrollment Status
+                    </h4>
+                    <div class="flex items-center gap-3 mb-6">
+                        <select id="updateStatusSelect" class="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30">
+                            <option value="Active">Active</option>
+                            <option value="On Leave">On Leave</option>
+                            <option value="Suspended">Suspended</option>
+                            <option value="Deferred">Deferred</option>
+                            <option value="Graduated">Graduated</option>
+                            <option value="Alumni">Alumni</option>
+                            <option value="Transferred">Transferred</option>
+                            <option value="Withdrawn">Withdrawn</option>
+                        </select>
+                        <button onclick="updateStudentStatus(document.getElementById('viewStudentModal').getAttribute('data-student-id'), document.getElementById('updateStatusSelect').value)" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold transition-colors">
+                            Update Status
+                        </button>
+                    </div>
+
+                    <!-- Status History -->
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="time-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Status History
+                    </h4>
+                    <div id="viewStatusHistory" class="space-y-2 max-h-64 overflow-y-auto">
+                        <!-- Status history will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Documents Tab -->
+                <div id="studentTab-documents" class="student-tab-content hidden">
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="document-attach-outline" class="text-xl text-emerald-600"></ion-icon>
                         Uploaded Documents
                     </h4>
                     <div id="viewDocumentsList" class="space-y-2">
@@ -883,7 +1272,46 @@
         </div>
     </div>
 
+    <script src="../assets/js/dummy-data.js"></script>
     <script src="../assets/js/modals.js"></script>
     <script src="../assets/js/student-records.js"></script>
+    
+    <!-- Student Profile Tab Switching -->
+    <script>
+        function switchStudentTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.student-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.student-profile-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-white', 'text-emerald-600', 'shadow-sm');
+                tab.classList.add('text-slate-600');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById('studentTab-' + tabName);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+            
+            // Add active class to clicked tab
+            const activeTab = document.querySelector(`.student-profile-tab[data-tab="${tabName}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active', 'bg-white', 'text-emerald-600', 'shadow-sm');
+                activeTab.classList.remove('text-slate-600');
+            }
+        }
+        
+        // Initialize first tab as active
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstTab = document.querySelector('.student-profile-tab');
+            if (firstTab) {
+                firstTab.classList.add('bg-white', 'text-emerald-600', 'shadow-sm');
+            }
+        });
+    </script>
+    <script src="../assets/js/navigation.js"></script>
 </body>
 </html>

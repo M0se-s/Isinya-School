@@ -39,8 +39,103 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Sidebar Navigation
     setupNavigation();
+
+    // Update reminders badge if present
+    if (typeof updateRemindersBadge === 'function') updateRemindersBadge();
 });
 
+// ============================================
+// Reminders UI & Actions
+// ============================================
+
+function getPendingRemindersCount() {
+    // Prefer authoritative data from invoicesData if available
+    if (window.invoicesData && Array.isArray(invoicesData)) {
+        return invoicesData.filter(inv => (inv.balance > 5000) && inv.status !== 'Paid').length;
+    }
+
+    // Fallback to reading the pendingCount element in the modal
+    const el = document.getElementById('pendingCount');
+    if (el) return parseInt(el.textContent) || 0;
+
+    return 0;
+}
+
+function updateRemindersBadge() {
+    const badge = document.getElementById('remindersBadge');
+    const pendingEl = document.getElementById('pendingCount');
+    const count = getPendingRemindersCount();
+
+    if (badge) {
+        if (count > 0) {
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    if (pendingEl) {
+        pendingEl.textContent = count;
+    }
+}
+
+function sendBulkReminders() {
+    const count = getPendingRemindersCount();
+    if (count <= 0) {
+        if (typeof showNotification === 'function') showNotification('No pending reminders', 'There are no students meeting the reminder criteria.', 'info');
+        else alert('No pending reminders');
+        return;
+    }
+
+    const btn = document.getElementById('bulkRemindersBtn');
+    const prevHTML = btn ? btn.innerHTML : null;
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<ion-icon name="send-outline"></ion-icon><span class="ml-2">Sending...</span>';
+    }
+
+    if (typeof showNotification === 'function') showNotification('Sending Reminders', `Sending ${count} reminders...`, 'info');
+
+    setTimeout(() => {
+        if (typeof showNotification === 'function') showNotification('Reminders Sent', `${count} reminders have been sent successfully.`, 'success');
+        else alert(`${count} reminders sent.`);
+
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = prevHTML;
+        }
+
+        // Close modal and update badge
+        closeModal('remindersModal');
+        updateRemindersBadge();
+    }, 1400);
+}
+
+function sendStudentReminder(el) {
+    if (!el) return;
+    const name = el.dataset.name || 'Student';
+    const bal = el.dataset.balance ? ` (KES ${el.dataset.balance})` : '';
+
+    // Simulate sending
+    if (typeof showNotification === 'function') showNotification('Reminder Sent', `Reminder sent to ${name}${bal}.`, 'success');
+    else alert(`Reminder sent to ${name}${bal}`);
+
+    // Disable the button to indicate it's been sent
+    el.disabled = true;
+    el.classList.add('opacity-50', 'cursor-not-allowed');
+}
+
+// Show a 'Coming Soon' notification for unfinished features
+function showComingSoon(feature = 'This feature') {
+    const title = 'Coming soon';
+    const message = `${feature} is coming soon. Stay tuned!`;
+    if (typeof showNotification === 'function') showNotification(title, message, 'info');
+    else alert(title + ': ' + message);
+}
+
+// ============================================
+// VIEW STUDENT FEE DETAILS
 // Navigation Logic
 function setupNavigation() {
     const navLinks = document.querySelectorAll('.sidebar-link');
@@ -90,13 +185,13 @@ function showScreen(screenId) {
 function initDashboardCharts() {
     const collectionCtx = document.getElementById('collectionChart');
     if (collectionCtx) {
-        new Chart(collectionCtx.getContext('2d'), {
+        window.collectionChart = new Chart(collectionCtx.getContext('2d'), {
             type: 'bar',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
                     label: 'Paid', data: [65000, 59000, 80000, 81000, 56000, 55000, 40000, 45000, 78000, 92000, 85000, 90000],
-                    backgroundColor: '#22c55e', borderRadius: 6, barThickness: 12
+                    backgroundColor: '#10B981', borderRadius: 6, barThickness: 12
                 }, {
                     label: 'Outstanding', data: [-15000, -12000, -8000, -5000, -10000, -15000, -25000, -30000, -12000, -8000, -10000, -5000],
                     backgroundColor: '#cbd5e1', borderRadius: 6, barThickness: 12
@@ -115,11 +210,11 @@ function initDashboardCharts() {
 
     const enrollmentCtx = document.getElementById('enrollmentChart');
     if (enrollmentCtx) {
-        new Chart(enrollmentCtx.getContext('2d'), {
+        window.enrollmentChart = new Chart(enrollmentCtx.getContext('2d'), {
             type: 'doughnut',
             data: {
                 labels: ['Paid', 'Partial', 'Unpaid'],
-                datasets: [{ data: [65, 20, 15], backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'], borderWidth: 0, cutout: '80%' }]
+                datasets: [{ data: [65, 20, 15], backgroundColor: ['#10B981', '#f59e0b', '#ef4444'], borderWidth: 0, cutout: '80%' }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { size: 10, weight: '600' } } } } }
         });
@@ -137,8 +232,8 @@ function initFeeCharts() {
                 datasets: [{
                     label: 'This Week',
                     data: [12000, 19000, 3000, 5000, 2000, 3000, 15000],
-                    borderColor: '#22c55e',
-                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.08)',
                     tension: 0.4,
                     fill: true
                 }, {
@@ -172,7 +267,7 @@ function initReportsCharts() {
                 labels: ['Tuition Fees', 'Transport', 'Boarding', 'Lunch Program', 'Other'],
                 datasets: [{
                     data: [45, 15, 25, 10, 5],
-                    backgroundColor: ['#22c55e', '#3b82f6', '#8b5cf6', '#f59e0b', '#64748b'],
+                    backgroundColor: ['#10B981', '#3b82f6', '#8b5cf6', '#f59e0b', '#64748b'],
                     borderWidth: 0
                 }]
             },

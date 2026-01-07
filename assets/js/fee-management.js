@@ -9,6 +9,9 @@ let invoicesData = [
     { id: 'INV-2026-0846', studentId: 2, studentName: 'James Mwangi', class: 'Form 3-B', date: '2026-01-05', dueDate: '2026-02-05', totalAmount: 61800, paidAmount: 46800, balance: 15000, status: 'Partial', items: [{name: 'Tuition Fee', amount: 45000}, {name: 'Boarding Fee', amount: 16800}] }
 ];
 
+// Add generated invoices from dummy data
+if (window.generatedInvoices) invoicesData.push(...generatedInvoices);
+
 let pledgesData = [
     { id: 'PLG-001', donorName: 'John Kamau', donorType: 'Alumni', email: 'jkamau@email.com', phone: '+254712345678', amount: 50000, fulfilled: 50000, balance: 0, status: 'Fulfilled', datePledged: '2025-12-15', expectedDate: '2026-01-15', purpose: 'Library expansion' },
     { id: 'PLG-002', donorName: 'Mary Wanjiku', donorType: 'Parent', email: 'mwanjiku@email.com', phone: '+254723456789', amount: 30000, fulfilled: 10000, balance: 20000, status: 'Partial', datePledged: '2026-01-03', expectedDate: '2026-03-01', purpose: 'Sports equipment' }
@@ -19,18 +22,8 @@ let receiptsData = [
     { id: 'REC-2026-1252', name: 'John Kamau', date: '2026-01-06', type: 'Donation', amount: 50000, method: 'Bank Transfer', reference: 'TRF-789456' }
 ];
 
-let cashFlowData = {
-    income: {
-        tuition: 2450000,
-        donations: 320000,
-        other: 80000
-    },
-    expenses: {
-        salaries: 1200000,
-        utilities: 350000,
-        supplies: 370000
-    }
-};
+// Add generated receipts from dummy data
+if (window.generatedReceipts) receiptsData.push(...generatedReceipts);
 
 // ============================================
 // TAB SWITCHING
@@ -632,14 +625,6 @@ function initCashFlowChart() {
                 borderWidth: 2,
                 tension: 0.4,
                 fill: true
-            }, {
-                label: 'Expenses',
-                data: [450000, 520000, 480000, 470000],
-                borderColor: '#F43F5E',
-                backgroundColor: 'rgba(244, 63, 94, 0.1)',
-                borderWidth: 2,
-                tension: 0.4,
-                fill: true
             }]
         },
         options: {
@@ -647,12 +632,7 @@ function initCashFlowChart() {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true,
-                        padding: 15,
-                        font: { size: 11, weight: '600' }
-                    }
+                    display: false
                 }
             },
             scales: {
@@ -771,6 +751,101 @@ function showNotification(title, message, type = 'info') {
 }
 
 // ============================================
+// VIEW STUDENT FEE DETAILS
+// ============================================
+
+function viewStudentFeeDetails(studentId, studentName, className, totalAmount, balance, status) {
+    // Create and show a detailed modal for student fees
+    const modal = document.createElement('div');
+    modal.id = 'studentFeeDetailsModal';
+    modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 modal-overlay';
+    
+    const statusColor = status === 'Paid' ? 'emerald' : status === 'Partial' ? 'amber' : 'rose';
+    
+    modal.innerHTML = `
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6 text-white">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold">${studentName}</h2>
+                        <p class="text-emerald-100 mt-1">${className} • ${studentId}</p>
+                    </div>
+                    <button onclick="closeModal('studentFeeDetailsModal')" class="p-2 hover:bg-white/20 rounded-full transition-colors">
+                        <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50">
+                        <p class="text-xs text-slate-500 font-semibold uppercase mb-1">Total Amount</p>
+                        <p class="text-2xl font-bold text-slate-900">KES ${totalAmount.toLocaleString()}</p>
+                    </div>
+                    <div class="p-4 rounded-2xl border border-${statusColor}-200 bg-${statusColor}-50">
+                        <p class="text-xs text-${statusColor}-600 font-semibold uppercase mb-1">Balance</p>
+                        <p class="text-2xl font-bold text-${statusColor}-700">KES ${balance.toLocaleString()}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-semibold text-slate-900">Fee Status</h3>
+                        <span class="px-3 py-1 bg-${statusColor}-100 text-${statusColor}-700 text-sm font-semibold rounded-full">${status}</span>
+                    </div>
+                    <div class="space-y-2 text-sm text-slate-600">
+                        <p><strong>Amount Paid:</strong> KES ${(totalAmount - balance).toLocaleString()}</p>
+                        <p><strong>Payment Progress:</strong> ${Math.round((totalAmount - balance) / totalAmount * 100)}%</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="recordPayment('${studentId}')" class="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-colors">
+                        <ion-icon name="cash-outline" class="text-lg"></ion-icon>
+                        Record Payment
+                    </button>
+                    <button onclick="printInvoice('${studentId}')" class="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold transition-colors">
+                        <ion-icon name="print-outline" class="text-lg"></ion-icon>
+                        Print Invoice
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    setTimeout(() => modal.classList.remove('hidden'), 10);
+}
+
+// Print invoice function
+function printInvoice(studentId) {
+    showNotification('Invoice Printing', 'Invoice is being prepared for printing...', 'info');
+    closeModal('studentFeeDetailsModal');
+}
+
+// ============================================
+// SEARCH FUNCTIONALITY
+// ============================================
+
+function initSearchFunctionality() {
+    const searchInput = document.getElementById('feeSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const tableRows = document.querySelectorAll('.fee-tab-content:not(.hidden) table tbody tr');
+            
+            tableRows.forEach(row => {
+                const studentName = row.querySelector('td')?.textContent.toLowerCase() || '';
+                if (studentName.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    }
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -805,6 +880,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize charts if on accounting tab
     initFeeCharts();
+    
+    // Initialize search functionality
+    initSearchFunctionality();
 
     console.log('Fee Management System Initialized');
 });

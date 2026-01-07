@@ -1,10 +1,25 @@
 /* Neo-Minimalist Design System */
 
+:root {
+    --emerald-500: #10B981;
+    --emerald-600: #059669;
+}
+
 body {
     font-family: 'Inter', system-ui, sans-serif;
     background-color: #F9FAFB;
     letter-spacing: -0.011em;
+    font-size: 14px;
 }
+
+/* Typography Scale - Consistent Sizes */
+.text-page-title { font-size: 1.5rem; font-weight: 700; line-height: 2rem; }
+.text-page-subtitle { font-size: 0.875rem; line-height: 1.25rem; color: #64748b; }
+.text-section-title { font-size: 1.125rem; font-weight: 700; line-height: 1.75rem; }
+.text-card-title { font-size: 0.875rem; font-weight: 600; line-height: 1.25rem; }
+.text-label { font-size: 0.75rem; font-weight: 600; line-height: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+.text-body { font-size: 0.875rem; line-height: 1.25rem; }
+.text-small { font-size: 0.75rem; line-height: 1rem; }
 
 /* Bento Grid Cards */
 .bento-card {
@@ -91,6 +106,7 @@ body {
     background: linear-gradient(135deg, #10B981 0%, #059669 100%);
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25), 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: -0.01em;
 }
@@ -109,7 +125,8 @@ body {
     border: 1px solid #e5e7eb;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-weight: 500;
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .btn-secondary:hover {
@@ -123,48 +140,48 @@ body {
     background: rgba(16, 185, 129, 0.08);
     color: #059669;
     border: 1px solid rgba(16, 185, 129, 0.15);
-    font-size: 0.6875rem;
-    font-weight: 600;
+    font-size: 0.625rem;
+    font-weight: 700;
     padding: 0.25rem 0.625rem;
     border-radius: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.05em;
 }
 
 .badge-warning {
     background: rgba(245, 158, 11, 0.08);
     color: #d97706;
     border: 1px solid rgba(245, 158, 11, 0.15);
-    font-size: 0.6875rem;
-    font-weight: 600;
+    font-size: 0.625rem;
+    font-weight: 700;
     padding: 0.25rem 0.625rem;
     border-radius: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.05em;
 }
 
 .badge-danger {
     background: rgba(239, 68, 68, 0.08);
     color: #dc2626;
     border: 1px solid rgba(239, 68, 68, 0.15);
-    font-size: 0.6875rem;
-    font-weight: 600;
+    font-size: 0.625rem;
+    font-weight: 700;
     padding: 0.25rem 0.625rem;
     border-radius: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.05em;
 }
 
 .badge-info {
     background: rgba(59, 130, 246, 0.08);
     color: #2563eb;
     border: 1px solid rgba(59, 130, 246, 0.15);
-    font-size: 0.6875rem;
-    font-weight: 600;
+    font-size: 0.625rem;
+    font-weight: 700;
     padding: 0.25rem 0.625rem;
     border-radius: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.025em;
+    letter-spacing: 0.05em;
 }
 
 /* Clean Tab Navigation */
@@ -215,11 +232,11 @@ body {
 }
 
 .modern-table th {
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #6B7280;
+    color: #64748b;
     padding: 0.75rem 1.25rem;
     background: #F9FAFB;
     border-bottom: 1px solid #e5e7eb;
@@ -229,8 +246,8 @@ body {
 .modern-table td {
     padding: 0.875rem 1.25rem;
     border-bottom: 1px solid #f3f4f6;
-    font-size: 0.8125rem;
-    color: #111827;
+    font-size: 0.875rem;
+    color: #0f172a;
 }
 
 .modern-table tbody tr {
@@ -272,4 +289,38 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Reminders button tweaks */
+.send-reminders-btn { padding-left: 1.1rem; padding-right: 1.1rem; }
+#remindersBadge { min-width: 28px; text-align: center; }
+
+
+/* Search Functionality Styles */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+#globalSearchInput:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    border-color: #10B981;
+}
+
+.search-highlight {
+    background-color: #fef08a;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
 }
