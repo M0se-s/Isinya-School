@@ -6,9 +6,8 @@
     <title>Isinya Township Secondary - Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="text-slate-800 antialiased relative">
@@ -243,89 +242,504 @@
 
             <!-- SCREEN 2: FEE MANAGEMENT -->
             <div id="fee-management-screen" class="screen-content h-full flex-col hidden">
-                <header class="flex items-center justify-between mb-8">
+                <header class="flex items-center justify-between mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold">Fee Management</h1>
-                        <p class="text-slate-500 text-sm">Track collections, send reminders and manage payments.</p>
+                        <h1 class="text-2xl font-semibold text-slate-900">Fee Management</h1>
+                        <p class="text-slate-500 text-sm mt-1">Track collections, send reminders and manage payments.</p>
                     </div>
-                    <button class="px-4 py-2 bg-green-500 text-white rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-green-600 transition-all">
-                        <ion-icon name="add-circle-outline" class="text-lg"></ion-icon> Record Payment
+                    <button class="btn-primary px-5 py-2.5 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i> Record Payment
                     </button>
                 </header>
 
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-                    <!-- Analytics Card 1 -->
-                    <div class="glass-card p-6 rounded-[2rem] flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-2 bg-green-100 text-green-600 rounded-xl"><ion-icon name="wallet-outline" class="text-xl"></ion-icon></div>
-                            <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+4.5%</span>
+                <!-- Tab Navigation -->
+                <div class="modern-card rounded-xl p-1.5 mb-6">
+                    <div class="flex flex-wrap gap-1 border-b border-slate-100 pb-0">
+                        <button onclick="switchTab('overview', event)" class="modern-tab active flex items-center gap-2">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+                        </button>
+                        <button onclick="switchTab('invoices', event)" class="modern-tab flex items-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> Invoices
+                        </button>
+                        <button onclick="switchTab('pledges', event)" class="modern-tab flex items-center gap-2">
+                            <i data-lucide="handshake" class="w-4 h-4"></i> Pledges
+                        </button>
+                        <button onclick="switchTab('accounting', event)" class="modern-tab flex items-center gap-2">
+                            <i data-lucide="calculator" class="w-4 h-4"></i> Accounting
+                        </button>
+                    </div>                </div>
+
+                <!-- TAB 1: OVERVIEW -->
+                <div id="overview" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5 mb-6">
+                        <!-- Total Collected Card -->
+                        <div class="modern-card p-5 rounded-xl flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+                                    <i data-lucide="wallet" class="w-5 h-5"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">+8.2%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-wide">Total Collected</p>
+                                <h3 class="text-2xl font-semibold mt-1.5 text-slate-900">KES 2,847,560</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3">From 756 students this term</p>
                         </div>
-                        <div>
-                            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Collected Today</p>
-                            <h3 class="text-2xl font-bold mt-1">KES 142,000</h3>
+
+                        <!-- Outstanding Fees Card -->
+                        <div class="modern-card p-5 rounded-xl flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="p-2 bg-red-50 text-red-600 rounded-lg">
+                                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-red-600 bg-red-50 px-2.5 py-1 rounded-full">-3.5%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-wide">Outstanding</p>
+                                <h3 class="text-2xl font-semibold mt-1.5 text-slate-900">KES 426,300</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3">189 students have balances</p>
                         </div>
-                    </div>
-                    <!-- Analytics Card 2 -->
-                     <div class="glass-card p-6 rounded-[2rem] flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-2 bg-rose-100 text-rose-600 rounded-xl"><ion-icon name="alert-circle-outline" class="text-xl"></ion-icon></div>
-                            <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-1 rounded-full">-2.1%</span>
+
+                        <!-- Collection Rate Card -->
+                        <div class="modern-card p-5 rounded-xl flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">+2.1%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-wide">Collection Rate</p>
+                                <h3 class="text-2xl font-semibold mt-1.5 text-slate-900">86.94%</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3">Target: 90% by term end</p>
                         </div>
-                         <div>
-                            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Overdue</p>
-                            <h3 class="text-2xl font-bold mt-1">KES 88,200</h3>
+
+                        <!-- Overdue Accounts Card -->
+                        <div class="modern-card p-5 rounded-xl flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+                                    <i data-lucide="clock" class="w-5 h-5"></i>
+                                </div>
+                                <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">+1.2%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-wide">Overdue (30+ days)</p>
+                                <h3 class="text-2xl font-semibold mt-1.5 text-slate-900">KES 156,840</h3>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3">45 student accounts</p>
                         </div>
                     </div>
 
-                    <!-- Line Chart -->
-                    <div class="lg:col-span-2 glass-card p-6 rounded-[2rem]">
-                        <h4 class="font-bold mb-4">Weekly Collection Trend</h4>
-                        <div class="h-40">
-                            <canvas id="feeTrendChart"></canvas>
+                    <!-- Fee Schedule/List -->
+                    <div class="modern-card rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+                            <h3 class="font-semibold text-slate-900">Active Fee Schedules - Term 1 2026</h3>
+                            <button class="btn-secondary px-3 py-1.5 rounded-md text-xs font-medium text-slate-600 flex items-center gap-1.5">
+                                <i data-lucide="settings" class="w-3.5 h-3.5"></i> Configure
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left modern-table">
+                                <thead>
+                                    <tr>
+                                        <th class="px-6 py-4">Fee Name</th>
+                                        <th class="px-6 py-4">Amount</th>
+                                        <th class="px-6 py-4">Applicable To</th>
+                                        <th class="px-6 py-4">Due Date</th>
+                                        <th class="px-6 py-4">Collected</th>
+                                        <th class="px-6 py-4 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-medium text-slate-900">Term 1 Tuition</td>
+                                        <td class="font-semibold text-slate-700">KES 40,000</td>
+                                        <td class="text-slate-500">All Students</td>
+                                        <td class="text-slate-500">Jan 15, 2026</td>
+                                        <td class="font-medium text-emerald-600">KES 37,200</td>
+                                        <td class="text-right"><span class="badge-success">ON TRACK</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-medium text-slate-900">Boarding Fee</td>
+                                        <td class="font-semibold text-slate-700">KES 18,000</td>
+                                        <td class="text-slate-500">Boarders Only</td>
+                                        <td class="text-slate-500">Jan 15, 2026</td>
+                                        <td class="font-medium text-emerald-600">KES 15,840</td>
+                                        <td class="text-right"><span class="badge-success">ON TRACK</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-medium text-slate-900">Transportation (Zone A)</td>
+                                        <td class="font-semibold text-slate-700">KES 8,500</td>
+                                        <td class="text-slate-500">Day Students</td>
+                                        <td class="text-slate-500">Jan 15, 2026</td>
+                                        <td class="font-medium text-emerald-600">KES 7,395</td>
+                                        <td class="text-right"><span class="badge-success">ON TRACK</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-medium text-slate-900">Transportation (Zone B)</td>
+                                        <td class="font-semibold text-slate-700">KES 12,000</td>
+                                        <td class="text-slate-500">Day Students</td>
+                                        <td class="text-slate-500">Jan 15, 2026</td>
+                                        <td class="font-medium text-amber-600">KES 9,840</td>
+                                        <td class="text-right"><span class="badge-warning">SLOW</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-medium text-slate-900">Sports & Activities</td>
+                                        <td class="font-semibold text-slate-700">KES 3,500</td>
+                                        <td class="text-slate-500">All Students</td>
+                                        <td class="text-slate-500">Jan 20, 2026</td>
+                                        <td class="font-medium text-red-600">KES 2,180</td>
+                                        <td class="text-right"><span class="badge-danger">AT RISK</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fee Schedule/List -->
-                <div class="glass-card rounded-[2rem] overflow-hidden flex-1">
-                    <div class="p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
-                         <h3 class="font-bold">Active Fee Schedules</h3>
-                         <button class="text-xs font-bold text-blue-600 hover:text-blue-700">Manage Fees</button>
+                <!-- TAB 2: INVOICES -->
+                <div id="invoices" class="tab-content hidden">
+                    <div class="modern-card rounded-xl overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold text-slate-900">Invoice Records</h3>
+                                <p class="text-xs text-slate-500 mt-1">All invoices generated and their payment status</p>
+                            </div>
+                            <button class="btn-primary px-4 py-2.5 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                                <i data-lucide="file-plus" class="w-4 h-4"></i> Generate Invoice
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left modern-table">
+                                <thead>
+                                    <tr>
+                                        <th class="px-6 py-4">Invoice No.</th>
+                                        <th class="px-6 py-4">Student Name</th>
+                                        <th class="px-6 py-4">Adm No.</th>
+                                        <th class="px-6 py-4">Issue Date</th>
+                                        <th class="px-6 py-4">Due Date</th>
+                                        <th class="px-6 py-4 text-right">Total Amount</th>
+                                        <th class="px-6 py-4 text-right">Paid</th>
+                                        <th class="px-6 py-4 text-right">Balance</th>
+                                        <th class="px-6 py-4 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50">
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-sm font-bold">INV-2026-0847</td>
+                                        <td class="px-6 py-4 font-medium">Faith Kipchoge</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">ADM-2024-0847</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 61,500</td>
+                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 61,500</td>
+                                        <td class="px-6 py-4 text-right text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">PAID</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-sm font-bold">INV-2026-0843</td>
+                                        <td class="px-6 py-4 font-medium">James Mwangi</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">ADM-2024-0843</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 43,500</td>
+                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 3,500</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold">PARTIAL</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-sm font-bold">INV-2026-0839</td>
+                                        <td class="px-6 py-4 font-medium">Amara Hassan</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">ADM-2024-0839</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 73,000</td>
+                                        <td class="px-6 py-4 text-right text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-right font-semibold text-rose-600">KES 73,000</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold">OVERDUE</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-sm font-bold">INV-2026-0835</td>
+                                        <td class="px-6 py-4 font-medium">Daniel Kipchoge</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">ADM-2024-0835</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 52,000</td>
+                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 52,000</td>
+                                        <td class="px-6 py-4 text-right text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">PAID</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-sm font-bold">INV-2026-0831</td>
+                                        <td class="px-6 py-4 font-medium">Sophia Njeri</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">ADM-2024-0831</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 2, 2026</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 56,800</td>
+                                        <td class="px-6 py-4 text-right text-green-600 font-semibold">KES 28,400</td>
+                                        <td class="px-6 py-4 text-right font-semibold">KES 28,400</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold">PARTIAL</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <table class="w-full text-left">
-                        <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold border-b border-slate-100">
-                            <tr>
-                                <th class="px-6 py-4">Fee Name</th>
-                                <th class="px-6 py-4">Amount</th>
-                                <th class="px-6 py-4">Frequency</th>
-                                <th class="px-6 py-4">Due Date</th>
-                                <th class="px-6 py-4 text-right">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50">
-                            <tr class="hover:bg-slate-50">
-                                <td class="px-6 py-4 font-medium">Term 1 Tuition 2026</td>
-                                <td class="px-6 py-4">KES 40,000</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Per Term</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
-                                <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">ACTIVE</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="px-6 py-4 font-medium">Boarding Fee</td>
-                                <td class="px-6 py-4">KES 18,000</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Per Term</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
-                                <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">ACTIVE</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="px-6 py-4 font-medium">Transportation (Zone A)</td>
-                                <td class="px-6 py-4">KES 8,500</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Per Term</td>
-                                <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
-                                <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">ACTIVE</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                </div>
+
+                <!-- TAB 3: PLEDGES -->
+                <div id="pledges" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Pledges Summary Cards -->
+                        <div class="glass-card p-6 rounded-[2rem] flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-blue-100 text-blue-600 rounded-xl"><ion-icon name="handshake-outline" class="text-xl"></ion-icon></div>
+                                <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">156</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Total Pledges</p>
+                                <h3 class="text-2xl font-bold mt-1">KES 854,200</h3>
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-3">Active commitments</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-[2rem] flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-green-100 text-green-600 rounded-xl"><ion-icon name="checkmark-circle-outline" class="text-xl"></ion-icon></div>
+                                <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">+12.3%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Pledge Fulfilled</p>
+                                <h3 class="text-2xl font-bold mt-1">KES 680,410</h3>
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-3">79.6% completion rate</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-[2rem] flex flex-col justify-between">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-amber-100 text-amber-600 rounded-xl"><ion-icon name="hourglass-outline" class="text-xl"></ion-icon></div>
+                                <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">-5.8%</span>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Pledge Outstanding</p>
+                                <h3 class="text-2xl font-bold mt-1">KES 173,790</h3>
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-3">20.4% pending</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-[2rem] overflow-hidden">
+                        <div class="p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold">Pledge Commitments</h3>
+                                <p class="text-xs text-slate-500 mt-1">Track student and parent fee pledges</p>
+                            </div>
+                            <button class="px-4 py-2 bg-green-500 text-white rounded-xl text-sm font-bold hover:bg-green-600 transition-colors shadow-lg shadow-green-200 flex items-center gap-2">
+                                <ion-icon name="add-circle-outline" class="text-lg"></ion-icon> New Pledge
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold border-b border-slate-100">
+                                    <tr>
+                                        <th class="px-6 py-4">Student</th>
+                                        <th class="px-6 py-4">Pledged By</th>
+                                        <th class="px-6 py-4">Pledge Amount</th>
+                                        <th class="px-6 py-4">Fulfilled</th>
+                                        <th class="px-6 py-4">Outstanding</th>
+                                        <th class="px-6 py-4">Due Date</th>
+                                        <th class="px-6 py-4 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50">
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-medium">Lucy Ochieng</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Parent</td>
+                                        <td class="px-6 py-4 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4 text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 31, 2026</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">FULFILLED</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-medium">David Kariuki</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Alumni</td>
+                                        <td class="px-6 py-4 font-semibold">KES 50,000</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 50,000</td>
+                                        <td class="px-6 py-4 text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Feb 15, 2026</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-[10px] font-bold">FULFILLED</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-medium">Patricia Mwangi</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Parent</td>
+                                        <td class="px-6 py-4 font-semibold">KES 30,000</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 15,000</td>
+                                        <td class="px-6 py-4 text-amber-600 font-semibold">KES 15,000</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Mar 31, 2026</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold">PARTIAL</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-medium">George Kipchoge</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Sponsor</td>
+                                        <td class="px-6 py-4 font-semibold">KES 75,000</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 45,000</td>
+                                        <td class="px-6 py-4 text-rose-600 font-semibold">KES 30,000</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 15, 2026</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold">OVERDUE</span></td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 font-medium">Helen Achieng</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Parent</td>
+                                        <td class="px-6 py-4 font-semibold">KES 35,200</td>
+                                        <td class="px-6 py-4 text-slate-500">KES 0</td>
+                                        <td class="px-6 py-4 text-rose-600 font-semibold">KES 35,200</td>
+                                        <td class="px-6 py-4 text-xs text-slate-500">Jan 20, 2026</td>
+                                        <td class="px-6 py-4 text-right"><span class="px-2 py-1 bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold">PENDING</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: ACCOUNTING -->
+                <div id="accounting" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <!-- Account Balance Summary -->
+                        <div class="glass-card p-6 rounded-[2rem]">
+                            <h3 class="font-bold mb-6">Account Summary</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-700">Total Expected Revenue</p>
+                                        <p class="text-xs text-slate-500">Term 1 2026</p>
+                                    </div>
+                                    <p class="text-lg font-bold text-slate-800">KES 3,273,860</p>
+                                </div>
+                                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-700">Total Collected</p>
+                                        <p class="text-xs text-slate-500">Actual receipts</p>
+                                    </div>
+                                    <p class="text-lg font-bold text-green-600">KES 2,847,560</p>
+                                </div>
+                                <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-700">Outstanding Invoices</p>
+                                        <p class="text-xs text-slate-500">Unpaid balances</p>
+                                    </div>
+                                    <p class="text-lg font-bold text-rose-600">KES 426,300</p>
+                                </div>
+                                <div class="flex items-center justify-between pt-2">
+                                    <div>
+                                        <p class="text-sm font-semibold text-slate-700">Collection Efficiency</p>
+                                        <p class="text-xs text-slate-500">Percentage collected</p>
+                                    </div>
+                                    <p class="text-lg font-bold text-blue-600">86.94%</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Account Details -->
+                        <div class="glass-card p-6 rounded-[2rem]">
+                            <h3 class="font-bold mb-6">Bank Accounts</h3>
+                            <div class="space-y-3">
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-blue-200 transition-colors">
+                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Primary Account</p>
+                                    <p class="font-semibold text-slate-800">Equity Bank Kenya - Checking</p>
+                                    <p class="text-xs text-slate-500 mt-1">Account: 1234567890 | Balance: KES 2,847,560</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-green-200 transition-colors">
+                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Mpesa Collection</p>
+                                    <p class="font-semibold text-slate-800">Isinya School - Till 123456</p>
+                                    <p class="text-xs text-slate-500 mt-1">M-Pesa: 0723456789 | Collected: KES 1,924,320</p>
+                                </div>
+                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-amber-200 transition-colors">
+                                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Petty Cash</p>
+                                    <p class="font-semibold text-slate-800">Office Cash Box</p>
+                                    <p class="text-xs text-slate-500 mt-1">On Hand: KES 45,680 | Last Reconciled: Jan 5, 2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Transactions -->
+                    <div class="glass-card rounded-[2rem] overflow-hidden">
+                        <div class="p-6 border-b border-slate-100 bg-slate-50/30 flex items-center justify-between">
+                            <div>
+                                <h3 class="font-bold">General Ledger - Fee Transactions</h3>
+                                <p class="text-xs text-slate-500 mt-1">Complete audit trail of all fee-related transactions</p>
+                            </div>
+                            <button class="px-4 py-2 bg-slate-600 text-white rounded-xl text-sm font-bold hover:bg-slate-700 transition-colors flex items-center gap-2">
+                                <ion-icon name="download-outline" class="text-lg"></ion-icon> Export
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50 text-slate-400 text-[10px] uppercase font-bold border-b border-slate-100">
+                                    <tr>
+                                        <th class="px-6 py-4">Date</th>
+                                        <th class="px-6 py-4">Transaction ID</th>
+                                        <th class="px-6 py-4">Type</th>
+                                        <th class="px-6 py-4">Description</th>
+                                        <th class="px-6 py-4">Debit</th>
+                                        <th class="px-6 py-4">Credit</th>
+                                        <th class="px-6 py-4">Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-50">
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm">Jan 7, 2026</td>
+                                        <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260107-089</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold">RECEIPT</span></td>
+                                        <td class="px-6 py-4 text-sm">Faith Kipchoge - Tuition Payment</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4">-</td>
+                                        <td class="px-6 py-4 font-semibold">KES 2,847,560</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm">Jan 6, 2026</td>
+                                        <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260106-087</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold">RECEIPT</span></td>
+                                        <td class="px-6 py-4 text-sm">James Mwangi - Partial Payment</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 40,000</td>
+                                        <td class="px-6 py-4">-</td>
+                                        <td class="px-6 py-4 font-semibold">KES 2,807,560</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm">Jan 5, 2026</td>
+                                        <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260105-085</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-blue-100 text-blue-700 rounded text-[10px] font-bold">INVOICE</span></td>
+                                        <td class="px-6 py-4 text-sm">Amara Hassan - Term 1 Invoice Generated</td>
+                                        <td class="px-6 py-4">-</td>
+                                        <td class="px-6 py-4 text-blue-600 font-semibold">KES 73,000</td>
+                                        <td class="px-6 py-4 font-semibold">KES 2,767,560</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm">Jan 4, 2026</td>
+                                        <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260104-083</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold">RECEIPT</span></td>
+                                        <td class="px-6 py-4 text-sm">Sophia Njeri - Partial Payment M-Pesa</td>
+                                        <td class="px-6 py-4 text-green-600 font-semibold">KES 28,400</td>
+                                        <td class="px-6 py-4">-</td>
+                                        <td class="px-6 py-4 font-semibold">KES 2,839,560</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm">Jan 3, 2026</td>
+                                        <td class="px-6 py-4 font-mono text-xs font-semibold">TXN-20260103-081</td>
+                                        <td class="px-6 py-4"><span class="px-2 py-1 bg-rose-100 text-rose-700 rounded text-[10px] font-bold">REFUND</span></td>
+                                        <td class="px-6 py-4 text-sm">Overpayment Refund - George Kipchoge</td>
+                                        <td class="px-6 py-4">-</td>
+                                        <td class="px-6 py-4 text-rose-600 font-semibold">KES 2,500</td>
+                                        <td class="px-6 py-4 font-semibold">KES 2,842,060</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -644,5 +1058,9 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>

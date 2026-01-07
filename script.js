@@ -204,3 +204,35 @@ function initReportsCharts() {
         });
     }
 }
+
+// Fee Management Tab Switching
+function switchTab(tabName, event) {
+    event.preventDefault();
+    
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    
+    // Remove active state from all tab buttons
+    document.querySelectorAll('.modern-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    const selectedTab = document.getElementById(tabName);
+    if (selectedTab) {
+        selectedTab.classList.remove('hidden');
+    }
+    
+    // Activate clicked button
+    const button = event.target.closest('.modern-tab');
+    if (button) {
+        button.classList.add('active');
+    }
+    
+    // Reinitialize Lucide icons for dynamic content
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
