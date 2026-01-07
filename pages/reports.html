@@ -30,12 +30,20 @@
 
         <!-- Sidebar -->
         <aside id="sidebar" class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky md:static top-0 h-screen fixed left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Collapse/Expand Toggle Button (Desktop Only) -->
+            <button id="sidebarToggle" type="button" title="Toggle Sidebar" aria-label="Toggle sidebar" aria-expanded="true">
+                <span class="toggle-glyph" aria-hidden="true">
+                    <span class="toggle-glyph-pane"></span>
+                    <span class="toggle-glyph-divider"></span>
+                    <span class="toggle-glyph-pane"></span>
+                </span>
+            </button>
             <div class="p-6">
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200 text-xl">
                         <ion-icon name="school-outline"></ion-icon>
                     </div>
-                    <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
+                    <span class="sidebar-text text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
                 </div>
 
                 <div class="mb-6">
@@ -51,18 +59,18 @@
                 </div>
 
                 <nav class="space-y-1">
-                    <p class="text-xs uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
-                    <a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
-                        <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
+                    <p class="sidebar-text text-xs uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+                    <a href="dashboard.html" data-tooltip="Dashboard" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="grid-outline" class="text-lg flex-shrink-0"></ion-icon> <span class="sidebar-text">Dashboard</span>
                     </a>
-                    <a href="fee-management.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
-                        <ion-icon name="wallet-outline" class="text-lg"></ion-icon> Fee Management
+                    <a href="fee-management.html" data-tooltip="Fee Management" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="wallet-outline" class="text-lg flex-shrink-0"></ion-icon> <span class="sidebar-text">Fee Management</span>
                     </a>
-                    <a href="student-records.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
-                        <ion-icon name="people-outline" class="text-lg"></ion-icon> Student Records
+                    <a href="student-records.html" data-tooltip="Student Records" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="people-outline" class="text-lg flex-shrink-0"></ion-icon> <span class="sidebar-text">Student Records</span>
                     </a>
-                    <a href="reports.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 bg-slate-100 text-slate-900 font-semibold rounded-xl text-sm transition-all hover:bg-slate-100">
-                        <ion-icon name="bar-chart-outline" class="text-lg"></ion-icon> Reports
+                    <a href="reports.html" data-tooltip="Reports" class="sidebar-link flex items-center gap-3 px-3 py-2.5 bg-slate-100 text-slate-900 font-semibold rounded-xl text-sm transition-all hover:bg-slate-100">
+                        <ion-icon name="bar-chart-outline" class="text-lg flex-shrink-0"></ion-icon> <span class="sidebar-text">Reports</span>
                     </a>
                 </nav>
             </div>

@@ -438,12 +438,193 @@ body {
     }
 }
 
+/* Sidebar Collapse/Expand Functionality */
+#sidebar {
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebarToggle {
+    position: absolute;
+    top: 18px;
+    right: -18px;
+    width: 38px;
+    height: 38px;
+    background: #ffffff;
+    border: 1.5px solid #dbe3f0;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 10px 24px rgba(148, 163, 184, 0.28);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #1e293b;
+}
+
+#sidebarToggle .toggle-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.3s ease, gap 0.3s ease;
+}
+
+#sidebarToggle .toggle-glyph-pane {
+    width: 10px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 3px;
+    background: transparent;
+    transition: transform 0.3s ease, height 0.3s ease;
+}
+
+#sidebarToggle .toggle-glyph-divider {
+    width: 2px;
+    height: 18px;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 0.3s ease, height 0.3s ease;
+}
+
+#sidebarToggle:hover {
+    background: #f1f5f9;
+    border-color: #cbd5f5;
+    box-shadow: 0 14px 28px rgba(148, 163, 184, 0.32);
+}
+
+#sidebarToggle:focus-visible {
+    outline: 3px solid rgba(59, 130, 246, 0.35);
+    outline-offset: 4px;
+}
+
+/* Collapsed State */
+#sidebar.collapsed {
+    width: 5rem;
+}
+
+#sidebar.collapsed #sidebarToggle .toggle-glyph {
+    flex-direction: column;
+    gap: 4px;
+}
+
+#sidebar.collapsed #sidebarToggle .toggle-glyph-pane {
+    height: 10px;
+}
+
+#sidebar.collapsed #sidebarToggle .toggle-glyph-divider {
+    height: 2px;
+    width: 18px;
+}
+
+#sidebar.collapsed .sidebar-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 0.75rem;
+    position: relative;
+}
+
+#sidebar.collapsed .sidebar-link ion-icon {
+    margin: 0;
+}
+
+/* Hide user profile section when collapsed */
+#sidebar.collapsed .mb-6 {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+}
+
+/* Center logo when collapsed */
+#sidebar.collapsed .flex.items-center.gap-3 {
+    justify-content: center;
+    gap: 0;
+}
+
+#sidebar.collapsed .w-10.h-10.bg-emerald-500 {
+    margin: 0;
+}
+
+/* Hide menu label when collapsed */
+#sidebar.collapsed nav > p {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Tooltip on hover for collapsed state */
+#sidebar.collapsed .sidebar-link {
+    position: relative;
+}
+
+#sidebar.collapsed .sidebar-link:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    margin-left: 0.5rem;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+}
+
+/* Hide toggle button on mobile */
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: none !important;
+    }
+    
+    /* On mobile, always show full width sidebar when open */
+    #sidebar.collapsed {
+        width: 16rem;
+    }
+    
+    /* Show all text on mobile */
+    #sidebar.collapsed .sidebar-text {
+        opacity: 1;
+        width: auto;
+    }
+    
+    #sidebar.collapsed .mb-6 {
+        opacity: 1;
+        height: auto;
+    }
+    
+    #sidebar.collapsed nav > p {
+        opacity: 1;
+        height: auto;
+    }
+}
+
 /* Mobile Navigation Enhancements */
 @media (max-width: 768px) {
     /* Ensure sidebar slides smoothly */
     #sidebar {
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
         display: flex !important; /* Override hidden class on mobile */
+    }
+    
+    /* On mobile, always show full width sidebar when open */
+    #sidebar.collapsed {
+        width: 16rem;
     }
     
     /* Backdrop for mobile menu */
