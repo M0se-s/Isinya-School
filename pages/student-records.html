@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records - Isinya Township Secondary</title>
+    
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
+        }
+    </script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="text-slate-800 antialiased">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
+                        <ion-icon name="school-outline"></ion-icon>
+                    </div>
+                    <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-200 mb-6">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full overflow-hidden text-2xl flex items-center justify-center">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </div>
+                        <div class="overflow-hidden">
+                            <p class="text-sm font-semibold truncate">Principal</p>
+                            <p class="text-xs text-slate-500">Admin Account</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <p class="text-[10px] uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+                    <a href="dashboard.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
+                    </a>
+                    <a href="fee-management.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="wallet-outline" class="text-lg"></ion-icon> Fee Management
+                    </a>
+                    <a href="student-records.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 bg-slate-100 text-slate-900 font-semibold rounded-xl text-sm transition-all hover:bg-slate-100">
+                        <ion-icon name="people-outline" class="text-lg"></ion-icon> Student Records
+                    </a>
+                    <a href="reports.html" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                        <ion-icon name="bar-chart-outline" class="text-lg"></ion-icon> Reports
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="flex-1 bg-[#f8fafc] p-4 md:p-8 overflow-y-auto h-screen">
+            <header class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold">Student Records</h1>
+                    <p class="text-slate-500 text-sm">Manage student profiles, enrollment, and status.</p>
+                </div>
+            </header>
+
+            <div class="glass-card rounded-[2.5rem] p-6 flex-1 flex flex-col">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <div class="relative flex-1">
+                        <ion-icon name="search-outline" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></ion-icon>
+                        <input type="text" placeholder="Search by name, admission no..." class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500/20">
+                    </div>
+                    <select class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none min-w-[150px]">
+                        <option value="">All Grades</option>
+                        <option>Form 1</option>
+                        <option>Form 2</option>
+                        <option>Form 3</option>
+                        <option>Form 4</option>
+                    </select>
+                    <select class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none min-w-[150px]">
+                        <option value="">Status</option>
+                        <option>Active</option>
+                        <option>On Leave</option>
+                        <option>Graduated</option>
+                    </select>
+                    <button onclick="openAddStudentModal()" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200 flex items-center gap-2">
+                        <ion-icon name="person-add-outline" class="text-lg"></ion-icon>
+                        Add Student
+                    </button>
+                </div>
+
+                <div class="overflow-auto flex-1 custom-scrollbar">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-50 sticky top-0 z-10 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                            <tr>
+                                <th class="px-6 py-4 rounded-l-xl">Student Name</th>
+                                <th class="px-6 py-4">Adm No.</th>
+                                <th class="px-6 py-4">Class</th>
+                                <th class="px-6 py-4">Parent/Guardian</th>
+                                <th class="px-6 py-4">Status</th>
+                                <th class="px-6 py-4 text-right rounded-r-xl">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-sm" id="studentTableBody">
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-xs">FK</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">Faith Kipchoge</div>
+                                            <div class="text-xs text-slate-500">Female</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-089</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 4-A</div>
+                                    <div class="text-xs text-slate-500">Science Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">John Kamau</div>
+                                    <div>+254 712 345 678</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                    <div class="mt-1">
+                                        <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-bold rounded-full uppercase">Scholarship</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-001')" class="p-2 hover:bg-blue-100 rounded-lg text-slate-400 hover:text-blue-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-001')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-001')" class="p-2 hover:bg-purple-100 rounded-lg text-slate-400 hover:text-purple-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 transition-colors group">
+                                <td class="px-6 py-4 font-medium">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">JM</div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900">James Mwangi</div>
+                                            <div class="text-xs text-slate-500">Male</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 font-mono text-xs">ADM-2023-112</td>
+                                <td class="px-6 py-4">
+                                    <div class="font-medium">Form 3-B</div>
+                                    <div class="text-xs text-slate-500">Arts Stream</div>
+                                </td>
+                                <td class="px-6 py-4 text-slate-500 text-xs">
+                                    <div class="font-medium text-slate-700">Sarah Mwangi</div>
+                                    <div>+254 722 456 789</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="badge-success">ACTIVE</span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button onclick="viewStudentProfile('STU-002')" class="p-2 hover:bg-blue-100 rounded-lg text-slate-400 hover:text-blue-600 transition-colors" title="View Profile">
+                                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openEditStudentModal('STU-002')" class="p-2 hover:bg-emerald-100 rounded-lg text-slate-400 hover:text-emerald-600 transition-colors" title="Edit Details">
+                                            <ion-icon name="create-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                        <button onclick="openDocumentUploadModal('STU-002')" class="p-2 hover:bg-purple-100 rounded-lg text-slate-400 hover:text-purple-600 transition-colors" title="Upload Documents">
+                                            <ion-icon name="document-attach-outline" class="text-lg"></ion-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    
+    <!-- Add Student Modal -->
+    <div id="addStudentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Add New Student</h3>
+                    <p class="text-sm text-slate-500 mt-1">Create a new student record</p>
+                </div>
+                <button onclick="closeModal('addStudentModal')" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-2xl text-slate-600"></ion-icon>
+                </button>
+            </div>
+            
+            <form id="addStudentForm" class="p-6">
+                <!-- Personal Information -->
+                <div class="mb-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="person-outline" class="text-xl text-blue-600"></ion-icon>
+                        Personal Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">First Name *</label>
+                            <input type="text" id="firstName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Last Name *</label>
+                            <input type="text" id="lastName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Middle Name</label>
+                            <input type="text" id="middleName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Admission Number *</label>
+                            <input type="text" id="admissionNumber" required placeholder="ADM-2026-XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth *</label>
+                            <input type="date" id="dateOfBirth" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Gender *</label>
+                            <select id="gender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">National ID / Birth Certificate No *</label>
+                            <input type="text" id="nationalId" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Nationality</label>
+                            <input type="text" id="nationality" value="Kenyan" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Academic Information
+                    </h4>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Class/Form *</label>
+                            <select id="classForm" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="">Select class</option>
+                                <option value="Form 1-A">Form 1-A</option>
+                                <option value="Form 1-B">Form 1-B</option>
+                                <option value="Form 2-A">Form 2-A</option>
+                                <option value="Form 2-B">Form 2-B</option>
+                                <option value="Form 3-A">Form 3-A</option>
+                                <option value="Form 3-B">Form 3-B</option>
+                                <option value="Form 4-A">Form 4-A</option>
+                                <option value="Form 4-B">Form 4-B</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Stream</label>
+                            <select id="stream" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="">Select stream</option>
+                                <option value="Science">Science</option>
+                                <option value="Arts">Arts</option>
+                                <option value="Technical">Technical</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Admission Date *</label>
+                            <input type="date" id="admissionDate" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Previous School</label>
+                            <input type="text" id="previousSchool" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+                            <select id="studentStatus" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="Active">Active</option>
+                                <option value="On Leave">On Leave</option>
+                                <option value="Suspended">Suspended</option>
+                                <option value="Graduated">Graduated</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center pt-8">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="isScholarship" class="w-4 h-4 rounded border-slate-300">
+                                <span class="text-sm font-semibold text-slate-700">On Scholarship</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent/Guardian Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="people-outline" class="text-xl text-purple-600"></ion-icon>
+                        Parent/Guardian Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Guardian Name *</label>
+                            <input type="text" id="guardianName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Relationship</label>
+                            <select id="guardianRelationship" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Guardian">Guardian</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number *</label>
+                            <input type="tel" id="guardianPhone" required placeholder="+254 XXX XXX XXX" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                            <input type="email" id="guardianEmail" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Physical Address</label>
+                            <textarea id="guardianAddress" rows="2" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                        Medical Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Blood Group</label>
+                            <select id="bloodGroup" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                                <option value="">Select blood group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Allergies</label>
+                            <input type="text" id="allergies" placeholder="None, or list allergies" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Medical Conditions / Notes</label>
+                            <textarea id="medicalNotes" rows="2" placeholder="Any medical conditions or special requirements" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-6 border-t border-slate-200">
+                    <button type="button" onclick="closeModal('addStudentModal')" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="submitAddStudent()" class="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-blue-200">
+                        Add Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Student Modal -->
+    <div id="editStudentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Edit Student Information</h3>
+                    <p class="text-sm text-slate-500 mt-1">Update student demographic data</p>
+                </div>
+                <button onclick="closeModal('editStudentModal')" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-2xl text-slate-600"></ion-icon>
+                </button>
+            </div>
+            
+            <form id="editStudentForm" class="p-6">
+                <!-- Same structure as Add Student form but with pre-filled data -->
+                <!-- Personal Information -->
+                <div class="mb-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="person-outline" class="text-xl text-blue-600"></ion-icon>
+                        Personal Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">First Name *</label>
+                            <input type="text" id="editFirstName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Last Name *</label>
+                            <input type="text" id="editLastName" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Middle Name</label>
+                            <input type="text" id="editMiddleName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Admission Number</label>
+                            <input type="text" id="editAdmissionNumber" readonly class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono bg-slate-50 cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Date of Birth *</label>
+                            <input type="date" id="editDateOfBirth" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Gender *</label>
+                            <select id="editGender" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">National ID / Birth Certificate No</label>
+                            <input type="text" id="editNationalId" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Nationality</label>
+                            <input type="text" id="editNationality" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Academic Information
+                    </h4>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Class/Form *</label>
+                            <select id="editClassForm" required class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="Form 1-A">Form 1-A</option>
+                                <option value="Form 1-B">Form 1-B</option>
+                                <option value="Form 2-A">Form 2-A</option>
+                                <option value="Form 2-B">Form 2-B</option>
+                                <option value="Form 3-A">Form 3-A</option>
+                                <option value="Form 3-B">Form 3-B</option>
+                                <option value="Form 4-A">Form 4-A</option>
+                                <option value="Form 4-B">Form 4-B</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Stream</label>
+                            <select id="editStream" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="">Select stream</option>
+                                <option value="Science">Science</option>
+                                <option value="Arts">Arts</option>
+                                <option value="Technical">Technical</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+                            <select id="editStudentStatus" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500">
+                                <option value="Active">Active</option>
+                                <option value="On Leave">On Leave</option>
+                                <option value="Suspended">Suspended</option>
+                                <option value="Graduated">Graduated</option>
+                            </select>
+                        </div>
+                        <div class="col-span-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="editIsScholarship" class="w-4 h-4 rounded border-slate-300">
+                                <span class="text-sm font-semibold text-slate-700">On Scholarship</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parent/Guardian Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="people-outline" class="text-xl text-purple-600"></ion-icon>
+                        Parent/Guardian Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Guardian Name</label>
+                            <input type="text" id="editGuardianName" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Relationship</label>
+                            <select id="editGuardianRelationship" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Guardian">Guardian</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                            <input type="tel" id="editGuardianPhone" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                            <input type="email" id="editGuardianEmail" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information -->
+                <div class="mb-6 border-t border-slate-200 pt-6">
+                    <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                        Medical Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Blood Group</label>
+                            <select id="editBloodGroup" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                                <option value="">Select blood group</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Allergies</label>
+                            <input type="text" id="editAllergies" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500">
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Medical Conditions / Notes</label>
+                            <textarea id="editMedicalNotes" rows="2" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-rose-500/30 focus:border-rose-500"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 pt-6 border-t border-slate-200">
+                    <button type="button" onclick="closeModal('editStudentModal')" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="submitEditStudent()" class="flex-1 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-emerald-200">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Document Upload Modal -->
+    <div id="documentUploadModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+            <div class="border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Upload Student Documents</h3>
+                    <p class="text-sm text-slate-500 mt-1">Upload identification and supporting documents</p>
+                </div>
+                <button onclick="closeModal('documentUploadModal')" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-2xl text-slate-600"></ion-icon>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-6 p-4 bg-blue-50 rounded-xl">
+                    <div class="flex items-start gap-3">
+                        <ion-icon name="information-circle" class="text-2xl text-blue-600 flex-shrink-0"></ion-icon>
+                        <div>
+                            <p class="font-semibold text-slate-900 mb-1">Student: <span id="uploadStudentName">Faith Kipchoge</span></p>
+                            <p class="text-sm text-slate-600">Admission No: <span id="uploadAdmissionNo" class="font-mono">ADM-2023-089</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Birth Certificate -->
+                    <div class="border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                                    <ion-icon name="document-outline" class="text-xl text-purple-600"></ion-icon>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-slate-900">Birth Certificate</h5>
+                                    <p class="text-xs text-slate-500">PDF, JPEG, PNG (Max 5MB)</p>
+                                </div>
+                            </div>
+                            <span id="birthCertStatus" class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-full">Not Uploaded</span>
+                        </div>
+                        <div class="relative">
+                            <input type="file" id="birthCertFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect('birthCert', this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-purple-400 hover:bg-purple-50/50 transition-all">
+                                <ion-icon name="cloud-upload-outline" class="text-4xl text-slate-400 mb-2"></ion-icon>
+                                <p class="text-sm text-slate-600">Click to upload or drag and drop</p>
+                            </div>
+                        </div>
+                        <div id="birthCertPreview" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="checkmark-circle" class="text-xl text-emerald-600"></ion-icon>
+                                <span class="text-sm font-medium text-slate-900" id="birthCertFileName"></span>
+                            </div>
+                            <button onclick="removeFile('birthCert')" class="text-rose-600 hover:text-rose-700">
+                                <ion-icon name="close-circle" class="text-xl"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- National ID / Passport -->
+                    <div class="border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                                    <ion-icon name="card-outline" class="text-xl text-blue-600"></ion-icon>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-slate-900">National ID / Passport</h5>
+                                    <p class="text-xs text-slate-500">PDF, JPEG, PNG (Max 5MB)</p>
+                                </div>
+                            </div>
+                            <span id="nationalIdStatus" class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-full">Not Uploaded</span>
+                        </div>
+                        <div class="relative">
+                            <input type="file" id="nationalIdFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect('nationalId', this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-blue-400 hover:bg-blue-50/50 transition-all">
+                                <ion-icon name="cloud-upload-outline" class="text-4xl text-slate-400 mb-2"></ion-icon>
+                                <p class="text-sm text-slate-600">Click to upload or drag and drop</p>
+                            </div>
+                        </div>
+                        <div id="nationalIdPreview" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="checkmark-circle" class="text-xl text-emerald-600"></ion-icon>
+                                <span class="text-sm font-medium text-slate-900" id="nationalIdFileName"></span>
+                            </div>
+                            <button onclick="removeFile('nationalId')" class="text-rose-600 hover:text-rose-700">
+                                <ion-icon name="close-circle" class="text-xl"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Academic Records -->
+                    <div class="border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center">
+                                    <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-slate-900">Previous School Records</h5>
+                                    <p class="text-xs text-slate-500">PDF, JPEG, PNG (Max 5MB)</p>
+                                </div>
+                            </div>
+                            <span id="academicRecordsStatus" class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-full">Not Uploaded</span>
+                        </div>
+                        <div class="relative">
+                            <input type="file" id="academicRecordsFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect('academicRecords', this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-emerald-400 hover:bg-emerald-50/50 transition-all">
+                                <ion-icon name="cloud-upload-outline" class="text-4xl text-slate-400 mb-2"></ion-icon>
+                                <p class="text-sm text-slate-600">Click to upload or drag and drop</p>
+                            </div>
+                        </div>
+                        <div id="academicRecordsPreview" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="checkmark-circle" class="text-xl text-emerald-600"></ion-icon>
+                                <span class="text-sm font-medium text-slate-900" id="academicRecordsFileName"></span>
+                            </div>
+                            <button onclick="removeFile('academicRecords')" class="text-rose-600 hover:text-rose-700">
+                                <ion-icon name="close-circle" class="text-xl"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Medical Records -->
+                    <div class="border border-slate-200 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center">
+                                    <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-slate-900">Medical Records (Optional)</h5>
+                                    <p class="text-xs text-slate-500">PDF, JPEG, PNG (Max 5MB)</p>
+                                </div>
+                            </div>
+                            <span id="medicalRecordsStatus" class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-full">Not Uploaded</span>
+                        </div>
+                        <div class="relative">
+                            <input type="file" id="medicalRecordsFile" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect('medicalRecords', this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            <div class="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-rose-400 hover:bg-rose-50/50 transition-all">
+                                <ion-icon name="cloud-upload-outline" class="text-4xl text-slate-400 mb-2"></ion-icon>
+                                <p class="text-sm text-slate-600">Click to upload or drag and drop</p>
+                            </div>
+                        </div>
+                        <div id="medicalRecordsPreview" class="hidden mt-3 p-3 bg-emerald-50 rounded-lg flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <ion-icon name="checkmark-circle" class="text-xl text-emerald-600"></ion-icon>
+                                <span class="text-sm font-medium text-slate-900" id="medicalRecordsFileName"></span>
+                            </div>
+                            <button onclick="removeFile('medicalRecords')" class="text-rose-600 hover:text-rose-700">
+                                <ion-icon name="close-circle" class="text-xl"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 mt-6 pt-6 border-t border-slate-200">
+                    <button type="button" onclick="closeModal('documentUploadModal')" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold transition-colors">
+                        Close
+                    </button>
+                    <button type="button" onclick="submitDocuments()" class="flex-1 px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-sm font-semibold transition-colors shadow-lg shadow-purple-200">
+                        Save Documents
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Student Profile Modal -->
+    <div id="viewStudentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8 text-white z-10">
+                <button onclick="closeModal('viewStudentModal')" class="absolute top-4 right-4 p-2 hover:bg-white/20 rounded-lg transition-colors">
+                    <ion-icon name="close" class="text-2xl"></ion-icon>
+                </button>
+                <div class="flex items-start gap-6">
+                    <div class="w-24 h-24 rounded-2xl bg-white/20 flex items-center justify-center text-4xl font-bold" id="viewStudentAvatar">
+                        FK
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold mb-2" id="viewStudentName">Faith Kipchoge</h3>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="flex items-center gap-1">
+                                <ion-icon name="card-outline"></ion-icon>
+                                <span id="viewStudentAdmNo" class="font-mono">ADM-2023-089</span>
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <ion-icon name="school-outline"></ion-icon>
+                                <span id="viewStudentClass">Form 4-A</span>
+                            </span>
+                            <span id="viewStudentScholarship" class="px-2 py-1 bg-white/20 rounded-full text-xs font-bold hidden">
+                                <ion-icon name="star"></ion-icon> SCHOLARSHIP
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-6">
+                <!-- Personal Information -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="person-outline" class="text-xl text-blue-600"></ion-icon>
+                        Personal Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-slate-500">Full Name:</span>
+                            <p class="font-medium text-slate-900" id="viewFullName"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Date of Birth:</span>
+                            <p class="font-medium text-slate-900" id="viewDOB"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Gender:</span>
+                            <p class="font-medium text-slate-900" id="viewGender"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">National ID:</span>
+                            <p class="font-medium text-slate-900" id="viewNationalId"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Academic Information -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="school-outline" class="text-xl text-emerald-600"></ion-icon>
+                        Academic Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-slate-500">Current Class:</span>
+                            <p class="font-medium text-slate-900" id="viewCurrentClass"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Stream:</span>
+                            <p class="font-medium text-slate-900" id="viewStream"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Admission Date:</span>
+                            <p class="font-medium text-slate-900" id="viewAdmissionDate"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Status:</span>
+                            <p class="font-medium text-slate-900" id="viewStatus"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guardian Information -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="people-outline" class="text-xl text-purple-600"></ion-icon>
+                        Parent/Guardian Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-slate-500">Guardian Name:</span>
+                            <p class="font-medium text-slate-900" id="viewGuardianName"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Relationship:</span>
+                            <p class="font-medium text-slate-900" id="viewGuardianRelation"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Phone:</span>
+                            <p class="font-medium text-slate-900" id="viewGuardianPhone"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Email:</span>
+                            <p class="font-medium text-slate-900" id="viewGuardianEmail"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Information -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="medical-outline" class="text-xl text-rose-600"></ion-icon>
+                        Medical Information
+                    </h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-slate-500">Blood Group:</span>
+                            <p class="font-medium text-slate-900" id="viewBloodGroup"></p>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Allergies:</span>
+                            <p class="font-medium text-slate-900" id="viewAllergies"></p>
+                        </div>
+                        <div class="col-span-2">
+                            <span class="text-slate-500">Medical Notes:</span>
+                            <p class="font-medium text-slate-900" id="viewMedicalNotes"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3 pb-2 border-b border-slate-200 flex items-center gap-2">
+                        <ion-icon name="document-attach-outline" class="text-xl text-amber-600"></ion-icon>
+                        Uploaded Documents
+                    </h4>
+                    <div id="viewDocumentsList" class="space-y-2">
+                        <!-- Documents will be listed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/modals.js"></script>
+    <script src="../assets/js/student-records.js"></script>
+</body>
+</html>

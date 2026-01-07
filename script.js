@@ -205,7 +205,7 @@ function initReportsCharts() {
     }
 }
 
-// Fee Management Tab Switching
+// Fee Management Tab Switching (Legacy)
 function switchTab(tabName, event) {
     event.preventDefault();
     
@@ -214,8 +214,8 @@ function switchTab(tabName, event) {
         tab.classList.add('hidden');
     });
     
-    // Remove active state from all tab buttons
-    document.querySelectorAll('.modern-tab').forEach(btn => {
+    // Remove active state from all tab buttons (support both modern-tab and institutional-tab)
+    document.querySelectorAll('.modern-tab, .institutional-tab').forEach(btn => {
         btn.classList.remove('active');
     });
     
@@ -226,7 +226,7 @@ function switchTab(tabName, event) {
     }
     
     // Activate clicked button
-    const button = event.target.closest('.modern-tab');
+    const button = event.target.closest('.modern-tab, .institutional-tab');
     if (button) {
         button.classList.add('active');
     }
@@ -234,5 +234,77 @@ function switchTab(tabName, event) {
     // Reinitialize Lucide icons for dynamic content
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
+    }
+}
+
+// Fee Management Tab Switching (New Design)
+function switchFeeTab(tabName, event) {
+    event.preventDefault();
+    
+    // Hide all fee tab contents
+    document.querySelectorAll('.fee-tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+    });
+    
+    // Remove active state from all fee tab buttons
+    document.querySelectorAll('.fee-tab').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    const selectedTab = document.getElementById(tabName);
+    if (selectedTab) {
+        selectedTab.classList.remove('hidden');
+    }
+    
+    // Activate clicked button
+    const button = event.target.closest('.fee-tab');
+    if (button) {
+        button.classList.add('active');
+    }
+    
+    // Initialize fee collection chart if on overview tab
+    if (tabName === 'overview' && !window.feeCollectionChartInit) {
+        initFeeCollectionChart();
+        window.feeCollectionChartInit = true;
+    }
+}
+
+// Initialize Fee Collection Chart
+function initFeeCollectionChart() {
+    const ctx = document.getElementById('feeCollectionChart');
+    if (ctx) {
+        new Chart(ctx.getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Collected',
+                    data: [450000, 380000, 520000, 410000, 490000, 550000],
+                    backgroundColor: '#10B981',
+                    borderRadius: 6,
+                    barThickness: 16
+                }, {
+                    label: 'Expected',
+                    data: [500000, 500000, 550000, 500000, 550000, 600000],
+                    backgroundColor: '#e2e8f0',
+                    borderRadius: 6,
+                    barThickness: 16
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, border: { display: false } },
+                    y: { 
+                        grid: { color: '#f1f5f9' }, 
+                        border: { display: false },
+                        ticks: { callback: v => (v/1000) + 'k' }
+                    }
+                }
+            }
+        });
     }
 }

@@ -1,0 +1,39 @@
+<!-- Sidebar Component -->
+<aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+    <div class="p-6">
+        <div class="flex items-center gap-3 mb-8">
+            <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
+                <ion-icon name="school-outline"></ion-icon>
+            </div>
+            <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
+        </div>
+
+        <div class="mb-6">
+            <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-200 mb-6">
+                <div class="w-10 h-10 bg-slate-200 rounded-full overflow-hidden text-2xl flex items-center justify-center">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+                <div class="overflow-hidden">
+                    <p class="text-sm font-semibold truncate">Principal</p>
+                    <p class="text-xs text-slate-500">Admin Account</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="space-y-1">
+            <p class="text-[10px] uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+            <a href="dashboard.html" data-page="dashboard" class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
+            </a>
+            <a href="fee-management.html" data-page="fee-management" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                <ion-icon name="wallet-outline" class="text-lg"></ion-icon> Fee Management
+            </a>
+            <a href="student-records.html" data-page="student-records" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                <ion-icon name="people-outline" class="text-lg"></ion-icon> Student Records
+            </a>
+            <a href="reports.html" data-page="reports" class="sidebar-link flex items-center gap-3 px-3 py-2.5 text-slate-500 rounded-xl text-sm font-medium transition-all hover:bg-slate-100">
+                <ion-icon name="bar-chart-outline" class="text-lg"></ion-icon> Reports
+            </a>
+        </nav>
+    </div>
+</aside>

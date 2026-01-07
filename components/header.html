@@ -1,0 +1,18 @@
+<!-- Header Component -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div>
+        <h1 id="page-title" class="text-2xl font-bold">Dashboard Overview</h1>
+        <p id="page-subtitle" class="text-slate-500 text-sm">Manage school fees and students efficiently.</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <div class="relative">
+            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg flex">
+                <ion-icon name="search-outline"></ion-icon>
+            </div>
+            <input type="text" placeholder="Search students, fees..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500/20 w-64 transition-all">
+        </div>
+        <button class="p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
+            <ion-icon name="notifications-outline" class="text-xl text-slate-600"></ion-icon>
+        </button>
+    </div>
+</header>

@@ -1,8 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+/* Neo-Minimalist Design System */
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #f8fafc;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #F9FAFB;
+    letter-spacing: -0.011em;
+}
+
+/* Bento Grid Cards */
+.bento-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-card:hover {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Glassmorphism Hero Card */
+.hero-glass {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 16px;
 }
 
 .glass-card {
@@ -53,121 +76,200 @@ body {
 .modern-card {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modern-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-    border-color: #d1d5db;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
 }
 
-/* Modern buttons */
+/* Premium Button Styles */
 .btn-primary {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
-    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25), 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 .btn-primary:hover {
-    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35), 0 2px 4px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
 }
 
 .btn-secondary {
     background: #ffffff;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
 }
 
 .btn-secondary:hover {
-    background: #f9fafb;
+    background: #F9FAFB;
     border-color: #d1d5db;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* Refined status badges */
+/* Subtle Status Badges */
 .badge-success {
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.08);
     color: #059669;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    font-size: 0.75rem;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    font-size: 0.6875rem;
     font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 .badge-warning {
-    background: rgba(245, 158, 11, 0.1);
+    background: rgba(245, 158, 11, 0.08);
     color: #d97706;
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    font-size: 0.75rem;
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    font-size: 0.6875rem;
     font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 .badge-danger {
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.08);
     color: #dc2626;
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    font-size: 0.75rem;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    font-size: 0.6875rem;
     font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
 .badge-info {
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(59, 130, 246, 0.08);
     color: #2563eb;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    font-size: 0.75rem;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    font-size: 0.6875rem;
     font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
 }
 
-/* Modern tabs */
+/* Clean Tab Navigation */
 .modern-tab {
     position: relative;
-    padding: 0.75rem 1.5rem;
-    color: #64748b;
+    padding: 0.875rem 1.25rem;
+    color: #6B7280;
     font-weight: 500;
-    transition: color 0.2s ease;
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: 2px solid transparent;
+    letter-spacing: -0.01em;
 }
 
 .modern-tab:hover {
-    color: #334155;
+    color: #111827;
+    background: rgba(16, 185, 129, 0.04);
 }
 
 .modern-tab.active {
-    color: #10b981;
-    border-bottom-color: #10b981;
+    color: #10B981;
+    border-bottom-color: #10B981;
+    background: rgba(16, 185, 129, 0.06);
+    font-weight: 600;
 }
 
-/* Table improvements */
+/* Institutional Tab Style - Flat, Icon-Rich */
+.institutional-tab {
+    position: relative;
+    color: #64748b;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    border-bottom-color: transparent;
+}
+
+.institutional-tab:hover {
+    color: #0f172a;
+}
+
+.institutional-tab.active {
+    color: #0f172a;
+    border-bottom-color: #0f172a;
+}
+
+/* Dense Ledger Tables */
+.modern-table {
+    font-variant-numeric: tabular-nums;
+}
+
 .modern-table th {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.6875rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #64748b;
-    padding: 0.875rem 1.5rem;
-    background: #f9fafb;
+    color: #6B7280;
+    padding: 0.75rem 1.25rem;
+    background: #F9FAFB;
     border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
 }
 
 .modern-table td {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: 0.875rem;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.8125rem;
+    color: #111827;
 }
 
 .modern-table tbody tr {
-    transition: background-color 0.15s ease;
+    transition: all 0.15s ease;
 }
 
 .modern-table tbody tr:hover {
-    background: #fafbfc;
+    background: #FAFBFC;
+    box-shadow: inset 0 0 0 1px #f3f4f6;
+}
+
+/* Numerical emphasis */
+.modern-table .text-right {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Fee Management Tab Styles */
+.fee-tab {
+    color: #64748b;
+    transition: all 0.2s ease;
+}
+
+.fee-tab:hover {
+    color: #1e293b;
+    background-color: #f1f5f9;
+}
+
+.fee-tab.active {
+    background-color: #10B981;
+    color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.fee-tab-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

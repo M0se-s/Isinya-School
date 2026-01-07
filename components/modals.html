@@ -1,0 +1,176 @@
+<!-- All Modals -->
+
+<!-- 1. Student Detail Modal -->
+<div id="studentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-slate-50 border-b border-slate-100 p-6 flex items-start justify-between">
+            <div class="flex items-center gap-4">
+                <div id="modalAvatar" class="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">JD</div>
+                <div>
+                    <h2 id="modalName" class="text-2xl font-bold text-slate-800">Jane Doe</h2>
+                    <div class="flex items-center gap-2 mt-1">
+                        <p id="modalGrade" class="text-sm text-slate-500 font-medium">Grade 9A</p>
+                        <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                        <div id="modalScholarship"></div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeModal('studentModal')" class="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-400">
+                <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+            </button>
+        </div>
+        <div class="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
+                    <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Total Paid (YTD)</p>
+                    <p class="text-xl font-bold">KES 145,200</p>
+                </div>
+                <div class="p-4 rounded-2xl border border-rose-100 bg-rose-50/30">
+                    <p class="text-xs text-rose-400 font-bold uppercase tracking-wider mb-1">Outstanding</p>
+                    <p class="text-xl font-bold text-rose-600">KES 12,500</p>
+                </div>
+            </div>
+            <h3 class="font-bold text-lg mb-4">Finance Logs</h3>
+            <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-slate-500">
+                        <tr><th class="px-4 py-3">Date</th><th class="px-4 py-3">Description</th><th class="px-4 py-3 text-right">Amount</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr><td class="px-4 py-3">Oct 24, 2024</td><td class="px-4 py-3">Term 3 Fee</td><td class="px-4 py-3 text-right">KES 45,000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Add Student Modal -->
+<div id="addStudentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold">Add New Student</h2>
+                <button onclick="closeModal('addStudentModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
+                    <input type="text" placeholder="Enter student name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500/20">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Grade</label>
+                        <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                            <option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Section</label>
+                        <input type="text" placeholder="A, B, or C" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Parent Contact</label>
+                    <input type="text" placeholder="+254..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                </div>
+                <label class="flex items-center gap-3 cursor-pointer p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100 mt-6">
+                    <input type="checkbox" class="w-5 h-5 rounded accent-indigo-600">
+                    <span class="text-sm font-semibold text-indigo-700 uppercase tracking-wide">Scholarship Student</span>
+                </label>
+                <button type="button" class="w-full py-4 bg-green-500 text-white font-bold rounded-2xl mt-4 hover:bg-green-600 shadow-lg shadow-green-100 transition-all">
+                    Register Student
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 3. View Records Modal -->
+<div id="viewRecordsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden h-[80vh] flex flex-col">
+        <div class="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h2 class="text-2xl font-bold">Student Directory</h2>
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <ion-icon name="search-outline" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></ion-icon>
+                    <input type="text" placeholder="Filter records..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm w-64 outline-none">
+                </div>
+                <button onclick="closeModal('viewRecordsModal')" class="p-2 bg-white border rounded-full hover:bg-slate-100"><ion-icon name="close-outline" class="text-xl"></ion-icon></button>
+            </div>
+        </div>
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+            <table class="w-full text-left">
+                <thead class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                    <tr><th class="pb-4">Name</th><th class="pb-4">Grade</th><th class="pb-4">Parent Phone</th><th class="pb-4">Status</th><th class="pb-4 text-right">Action</th></tr>
+                </thead>
+                <tbody class="text-sm divide-y divide-slate-50">
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="py-4 font-medium">Jane Doe</td><td class="py-4">9A</td><td class="py-4 text-slate-500">+254 712 345 678</td>
+                        <td class="py-4"><span class="badge-success">ENROLLED</span></td>
+                        <td class="py-4 text-right"><button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><ion-icon name="create-outline"></ion-icon></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- 4. Invoices Modal -->
+<div id="invoicesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-8">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-bold">Billing & Invoices</h2>
+                <button onclick="closeModal('invoicesModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="p-4 bg-slate-50 rounded-2xl flex items-center justify-between group border border-transparent hover:border-slate-200 transition-all">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-amber-500 text-xl shadow-sm"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <div><p class="font-bold">INV-2024-001</p><p class="text-xs text-slate-500">Term 3 Tuition - Jane Doe</p></div>
+                    </div>
+                    <button class="px-4 py-2 bg-white rounded-xl text-xs font-bold shadow-sm border border-slate-100 hover:bg-slate-50">Download</button>
+                </div>
+            </div>
+            <button class="w-full mt-8 py-4 bg-slate-900 text-white font-bold rounded-2xl flex items-center justify-center gap-2">
+                <ion-icon name="add-outline"></ion-icon> Generate New Invoice
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- 5. Reminders Modal -->
+<div id="remindersModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+    <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-8">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold">Send Reminders</h2>
+                    <p class="text-sm text-slate-500">Outstanding fee notifications</p>
+                </div>
+                <button onclick="closeModal('remindersModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                </button>
+            </div>
+            <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 mb-6 flex items-start gap-4">
+                <ion-icon name="alert-circle-outline" class="text-2xl text-amber-500"></ion-icon>
+                <div><p class="text-sm font-bold text-amber-800">12 Pending Notifications</p><p class="text-xs text-amber-600">Students with balances over KES 5,000</p></div>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-200 text-[10px] font-bold flex items-center justify-center">AC</div>
+                        <div><p class="text-sm font-bold">Alex Chen</p><p class="text-[10px] text-rose-500">KES 2,400 unpaid</p></div>
+                    </div>
+                    <button class="p-2 text-green-500 hover:bg-green-50 rounded-lg"><ion-icon name="send-outline"></ion-icon></button>
+                </div>
+            </div>
+            <button class="w-full mt-6 py-4 bg-green-500 text-white font-bold rounded-2xl shadow-lg shadow-green-100">Send Bulk Reminders</button>
+        </div>
+    </div>
+</div>
