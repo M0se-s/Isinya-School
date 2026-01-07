@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isinya Township Secondary - Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .sidebar-item-active {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            color: #000;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        /* Modal Transitions */
+        .modal-overlay {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s;
+        }
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .modal-overlay:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased relative">
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar: Sticky and Fixed height -->
+        <aside class="w-64 flex-shrink-0 bg-slate-50 border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-green-200 text-xl">
+                        <ion-icon name="school-outline"></ion-icon>
+                    </div>
+                    <span class="text-lg font-bold tracking-tight leading-tight">Isinya Township Secondary</span>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 p-3 bg-white rounded-2xl border border-slate-200 mb-6">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full overflow-hidden text-2xl flex items-center justify-center">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </div>
+                        <div class="overflow-hidden">
+                            <p class="text-sm font-semibold truncate">Principal</p>
+                            <p class="text-xs text-slate-500">Admin Account</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="space-y-1">
+                    <p class="text-[10px] uppercase font-bold text-slate-400 px-3 mb-2">Main Menu</p>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 sidebar-item-active rounded-xl text-sm font-medium">
+                        <ion-icon name="grid-outline" class="text-lg"></ion-icon> Dashboard
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-slate-800 hover:bg-white rounded-xl text-sm font-medium transition-all">
+                        <ion-icon name="wallet-outline" class="text-lg"></ion-icon> Fee Management
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-slate-800 hover:bg-white rounded-xl text-sm font-medium transition-all">
+                        <ion-icon name="people-outline" class="text-lg"></ion-icon> Student Records
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-slate-800 hover:bg-white rounded-xl text-sm font-medium transition-all">
+                        <ion-icon name="book-outline" class="text-lg"></ion-icon> Classes
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:text-slate-800 hover:bg-white rounded-xl text-sm font-medium transition-all">
+                        <ion-icon name="bar-chart-outline" class="text-lg"></ion-icon> Reports
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content: Wraps height to content -->
+        <main class="flex-1 bg-[#f8fafc] p-4 md:p-8">
+            <!-- Header -->
+            <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold">Dashboard Overview</h1>
+                    <p class="text-slate-500 text-sm">Manage school fees and students efficiently.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg flex">
+                             <ion-icon name="search-outline"></ion-icon>
+                        </div>
+                        <input type="text" placeholder="Search students, fees..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-green-500/20 w-64 transition-all">
+                    </div>
+                    <button class="p-2 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors flex items-center justify-center">
+                        <ion-icon name="notifications-outline" class="text-xl text-slate-600"></ion-icon>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Top Stats Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Total Collected -->
+                <div class="lg:col-span-2 bg-green-500 rounded-[2rem] p-6 text-white relative overflow-hidden shadow-xl shadow-green-100">
+                    <div class="relative z-10">
+                        <p class="text-green-100 text-sm font-medium mb-1">Total Fees Collected</p>
+                        <h2 class="text-4xl font-bold mb-6">KES 842,670.00</h2>
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 bg-white text-green-600 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-green-50 transition-colors">
+                                <ion-icon name="add-outline" class="text-lg"></ion-icon> Log Payment
+                            </button>
+                            <button class="px-4 py-2 bg-green-400/30 text-white rounded-xl text-sm font-medium hover:bg-green-400/50 transition-colors">
+                                Send Reminders
+                            </button>
+                        </div>
+                    </div>
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+                </div>
+
+                <!-- Fee Overview Cards -->
+                <div class="glass-card rounded-[2rem] p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl">
+                                <ion-icon name="time-outline"></ion-icon>
+                            </div>
+                            <span class="text-[10px] font-bold text-blue-500 px-2 py-1 bg-blue-50 rounded-full">+12.5%</span>
+                        </div>
+                        <p class="text-slate-500 text-xs font-medium uppercase tracking-wider">Outstanding</p>
+                        <h3 class="text-xl font-bold">KES 14,480.24</h3>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Next billing cycle: Oct 1st</p>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-3 glass-card rounded-[2rem] p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 class="font-bold text-lg">Monthly Fee Collection</h3>
+                            <p class="text-xs text-slate-400">Comparison of collected vs. outstanding amounts</p>
+                        </div>
+                        <div class="flex items-center gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                    <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Paid</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider">Outstanding</span>
+                                </div>
+                            </div>
+                            <select class="text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 outline-none hover:bg-slate-100 transition-colors">
+                                <option>This Year</option>
+                                <option>Last Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="h-80 w-full">
+                        <canvas id="collectionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Transactions & Management -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Fee Payments -->
+                <div class="lg:col-span-2 glass-card rounded-[2rem] overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                        <h3 class="font-bold">Recent Fee Payments</h3>
+                        <button class="text-xs text-green-600 font-semibold hover:underline">View All</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-50/50 text-slate-400 text-[10px] uppercase font-bold">
+                                <tr>
+                                    <th class="px-6 py-4">Student</th>
+                                    <th class="px-6 py-4">Grade</th>
+                                    <th class="px-6 py-4">Date</th>
+                                    <th class="px-6 py-4 text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50 cursor-pointer">
+                                <tr onclick="openStudentModal('Jane Doe', 'Grade 9A', 'JD', true)" class="hover:bg-slate-50/50 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-bold group-hover:bg-blue-200 transition-colors">JD</div>
+                                            <span class="text-sm font-medium group-hover:text-blue-600 transition-colors">Jane Doe</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">Grade 9A</td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">2024-09-25</td>
+                                    <td class="px-6 py-4 text-sm font-bold text-right text-slate-700">KES 1,200.00</td>
+                                </tr>
+                                <tr onclick="openStudentModal('Mark Smith', 'Grade 11C', 'MS', false)" class="hover:bg-slate-50/50 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-[10px] font-bold group-hover:bg-purple-200 transition-colors">MS</div>
+                                            <span class="text-sm font-medium group-hover:text-purple-600 transition-colors">Mark Smith</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">Grade 11C</td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">2024-09-24</td>
+                                    <td class="px-6 py-4 text-sm font-bold text-right text-slate-700">KES 850.50</td>
+                                </tr>
+                                <tr onclick="openStudentModal('Alex Chen', 'Grade 12B', 'AC', true)" class="hover:bg-slate-50/50 transition-colors group">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-[10px] font-bold group-hover:bg-rose-200 transition-colors">AC</div>
+                                            <span class="text-sm font-medium group-hover:text-rose-600 transition-colors">Alex Chen</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">Grade 12B</td>
+                                    <td class="px-6 py-4 text-xs text-slate-500">2024-09-23</td>
+                                    <td class="px-6 py-4 text-sm font-bold text-right text-slate-700">KES 2,400.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Manage Students -->
+                <div class="glass-card rounded-[2rem] p-6">
+                    <h3 class="font-bold mb-6">Manage Students</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="openModal('addStudentModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-green-200 hover:bg-green-50/30 transition-all group">
+                            <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-green-600">
+                                <ion-icon name="person-add-outline"></ion-icon>
+                            </div>
+                            <span class="text-xs font-semibold">Add Student</span>
+                        </button>
+                        <button onclick="openModal('viewRecordsModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
+                            <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-blue-600">
+                                <ion-icon name="eye-outline"></ion-icon>
+                            </div>
+                            <span class="text-xs font-semibold">View Records</span>
+                        </button>
+                        <button onclick="openModal('invoicesModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-amber-200 hover:bg-amber-50/30 transition-all group">
+                            <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-amber-600">
+                                <ion-icon name="document-text-outline"></ion-icon>
+                            </div>
+                            <span class="text-xs font-semibold">Invoices</span>
+                        </button>
+                        <button onclick="openModal('remindersModal')" class="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:border-rose-200 hover:bg-rose-50/30 transition-all group">
+                            <div class="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform text-xl text-rose-600">
+                                <ion-icon name="mail-outline"></ion-icon>
+                            </div>
+                            <span class="text-xs font-semibold">Reminders</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-8">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Enrollment Status</h4>
+                        <div class="h-40">
+                            <canvas id="enrollmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals Container -->
+    
+    <!-- 1. Student Detail Modal (Legacy) -->
+    <div id="studentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-100 p-6 flex items-start justify-between">
+                <div class="flex items-center gap-4">
+                    <div id="modalAvatar" class="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">JD</div>
+                    <div>
+                        <h2 id="modalName" class="text-2xl font-bold text-slate-800">Jane Doe</h2>
+                        <div class="flex items-center gap-2 mt-1">
+                            <p id="modalGrade" class="text-sm text-slate-500 font-medium">Grade 9A</p>
+                            <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+                            <div id="modalScholarship"></div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeModal('studentModal')" class="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-400">
+                    <ion-icon name="close-outline" class="text-2xl"></ion-icon>
+                </button>
+            </div>
+            <div class="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Total Paid (YTD)</p>
+                        <p class="text-xl font-bold">KES 145,200</p>
+                    </div>
+                    <div class="p-4 rounded-2xl border border-rose-100 bg-rose-50/30">
+                        <p class="text-xs text-rose-400 font-bold uppercase tracking-wider mb-1">Outstanding</p>
+                        <p class="text-xl font-bold text-rose-600">KES 12,500</p>
+                    </div>
+                </div>
+                <h3 class="font-bold text-lg mb-4">Finance Logs</h3>
+                <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50 text-slate-500">
+                            <tr><th class="px-4 py-3">Date</th><th class="px-4 py-3">Description</th><th class="px-4 py-3 text-right">Amount</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr><td class="px-4 py-3">Oct 24, 2024</td><td class="px-4 py-3">Term 3 Fee</td><td class="px-4 py-3 text-right">KES 45,000</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Add Student Modal -->
+    <div id="addStudentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold">Add New Student</h2>
+                    <button onclick="closeModal('addStudentModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                        <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                    </button>
+                </div>
+                <form class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Full Name</label>
+                        <input type="text" placeholder="Enter student name" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500/20">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Grade</label>
+                            <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                                <option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Section</label>
+                            <input type="text" placeholder="A, B, or C" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Parent Contact</label>
+                        <input type="text" placeholder="+254..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                    </div>
+                    <label class="flex items-center gap-3 cursor-pointer p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100 mt-6">
+                        <input type="checkbox" class="w-5 h-5 rounded accent-indigo-600">
+                        <span class="text-sm font-semibold text-indigo-700 uppercase tracking-wide">Scholarship Student</span>
+                    </label>
+                    <button type="button" class="w-full py-4 bg-green-500 text-white font-bold rounded-2xl mt-4 hover:bg-green-600 shadow-lg shadow-green-100 transition-all">
+                        Register Student
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. View Records Modal -->
+    <div id="viewRecordsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden h-[80vh] flex flex-col">
+            <div class="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <h2 class="text-2xl font-bold">Student Directory</h2>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <ion-icon name="search-outline" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></ion-icon>
+                        <input type="text" placeholder="Filter records..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm w-64 outline-none">
+                    </div>
+                    <button onclick="closeModal('viewRecordsModal')" class="p-2 bg-white border rounded-full hover:bg-slate-100"><ion-icon name="close-outline" class="text-xl"></ion-icon></button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+                <table class="w-full text-left">
+                    <thead class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                        <tr><th class="pb-4">Name</th><th class="pb-4">Grade</th><th class="pb-4">Parent Phone</th><th class="pb-4">Status</th><th class="pb-4 text-right">Action</th></tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-slate-50">
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-4 font-medium">Jane Doe</td><td class="py-4">9A</td><td class="py-4 text-slate-500">+254 712 345 678</td>
+                            <td class="py-4"><span class="px-2 py-1 bg-green-100 text-green-600 rounded-lg text-[10px] font-bold">ENROLLED</span></td>
+                            <td class="py-4 text-right"><button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><ion-icon name="create-outline"></ion-icon></button></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="py-4 font-medium">Mark Smith</td><td class="py-4">11C</td><td class="py-4 text-slate-500">+254 712 998 877</td>
+                            <td class="py-4"><span class="px-2 py-1 bg-green-100 text-green-600 rounded-lg text-[10px] font-bold">ENROLLED</span></td>
+                            <td class="py-4 text-right"><button class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg"><ion-icon name="create-outline"></ion-icon></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Invoices Modal -->
+    <div id="invoicesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+        <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold">Billing & Invoices</h2>
+                    <button onclick="closeModal('invoicesModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                        <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div class="p-4 bg-slate-50 rounded-2xl flex items-center justify-between group border border-transparent hover:border-slate-200 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-amber-500 text-xl shadow-sm"><ion-icon name="document-text-outline"></ion-icon></div>
+                            <div><p class="font-bold">INV-2024-001</p><p class="text-xs text-slate-500">Term 3 Tuition - Jane Doe</p></div>
+                        </div>
+                        <button class="px-4 py-2 bg-white rounded-xl text-xs font-bold shadow-sm border border-slate-100 hover:bg-slate-50">Download</button>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-2xl flex items-center justify-between group border border-transparent hover:border-slate-200 transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-amber-500 text-xl shadow-sm"><ion-icon name="document-text-outline"></ion-icon></div>
+                            <div><p class="font-bold">INV-2024-002</p><p class="text-xs text-slate-500">Lab Fees - Grade 10</p></div>
+                        </div>
+                        <button class="px-4 py-2 bg-white rounded-xl text-xs font-bold shadow-sm border border-slate-100 hover:bg-slate-50">Download</button>
+                    </div>
+                </div>
+                <button class="w-full mt-8 py-4 bg-slate-900 text-white font-bold rounded-2xl flex items-center justify-center gap-2">
+                    <ion-icon name="add-outline"></ion-icon> Generate New Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Reminders Modal -->
+    <div id="remindersModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
+        <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold">Send Reminders</h2>
+                        <p class="text-sm text-slate-500">Outstanding fee notifications</p>
+                    </div>
+                    <button onclick="closeModal('remindersModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                        <ion-icon name="close-outline" class="text-xl"></ion-icon>
+                    </button>
+                </div>
+                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 mb-6 flex items-start gap-4">
+                    <ion-icon name="alert-circle-outline" class="text-2xl text-amber-500"></ion-icon>
+                    <div><p class="text-sm font-bold text-amber-800">12 Pending Notifications</p><p class="text-xs text-amber-600">Students with balances over KES 5,000</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 text-[10px] font-bold flex items-center justify-center">AC</div>
+                            <div><p class="text-sm font-bold">Alex Chen</p><p class="text-[10px] text-rose-500">KES 2,400 unpaid</p></div>
+                        </div>
+                        <button class="p-2 text-green-500 hover:bg-green-50 rounded-lg"><ion-icon name="send-outline"></ion-icon></button>
+                    </div>
+                </div>
+                <button class="w-full mt-6 py-4 bg-green-500 text-white font-bold rounded-2xl shadow-lg shadow-green-100">Send Bulk Reminders</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal State Management
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Student Detail Modal Logic
+        function openStudentModal(name, grade, initials, isScholarship) {
+            const modalAvatar = document.getElementById('modalAvatar');
+            const modalScholarship = document.getElementById('modalScholarship');
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalGrade').textContent = grade;
+            modalAvatar.textContent = initials;
+            const colors = ['bg-blue-100 text-blue-600', 'bg-purple-100 text-purple-600', 'bg-rose-100 text-rose-600', 'bg-amber-100 text-amber-600'];
+            modalAvatar.className = `w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold ${colors[name.length % colors.length]}`;
+            modalScholarship.innerHTML = isScholarship ? `<span class="px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 text-[10px] font-bold uppercase tracking-wide flex items-center gap-1"><ion-icon name="star"></ion-icon> Scholarship</span>` : '';
+            openModal('studentModal');
+        }
+
+        // Close on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal(overlay.id);
+            });
+        });
+
+        // Charts
+        const collectionCtx = document.getElementById('collectionChart').getContext('2d');
+        new Chart(collectionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Paid', data: [65000, 59000, 80000, 81000, 56000, 55000, 40000, 45000, 78000, 92000, 85000, 90000],
+                    backgroundColor: '#22c55e', borderRadius: 6, barThickness: 12
+                }, {
+                    label: 'Outstanding', data: [-15000, -12000, -8000, -5000, -10000, -15000, -25000, -30000, -12000, -8000, -10000, -5000],
+                    backgroundColor: '#cbd5e1', borderRadius: 6, barThickness: 12
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { stacked: true, grid: { display: false }, border: { display: false } },
+                    y: { stacked: true, grid: { color: '#f1f5f9' }, border: { display: false }, ticks: { callback: v => Math.abs(v) >= 1000 ? (Math.abs(v)/1000) + 'k' : Math.abs(v) } }
+                }
+            }
+        });
+
+        const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+        new Chart(enrollmentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Paid', 'Partial', 'Unpaid'],
+                datasets: [{ data: [65, 20, 15], backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'], borderWidth: 0, cutout: '80%' }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { size: 10, weight: '600' } } } } }
+        });
+    </script>
+</body>
+</html>
