@@ -384,7 +384,45 @@ body {
     .rounded-\[2\.5rem\] {
         border-radius: 1rem !important;
     }
-}
+    
+    /* Fix sidebar on mobile - ensure it's hidden by default */
+    #sidebar {
+        transform: translateX(-100%);
+    }
+    
+    /* When sidebar is open on mobile */
+    #sidebar.translate-x-0 {
+        transform: translateX(0);
+    }
+    
+    /* Fix tables - make them scroll horizontally */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+    
+    thead, tbody, tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    
+    /* Add horizontal padding to main content on mobile */
+    main {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Make modal dialogs full screen on mobile */
+    .modal-overlay .bg-white {
+        max-width: 100% !important;
+        max-height: 95vh !important;
+        margin: 0.5rem;
+        border-radius: 1.5rem;
+    }
 
 /* Tablet Adjustments (640px - 768px) */
 @media (min-width: 640px) and (max-width: 768px) {
@@ -405,6 +443,7 @@ body {
     /* Ensure sidebar slides smoothly */
     #sidebar {
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        display: flex !important; /* Override hidden class on mobile */
     }
     
     /* Backdrop for mobile menu */
@@ -412,7 +451,33 @@ body {
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
     }
-}
+    
+    /* Fix header spacing on mobile */
+    header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    /* Make search input full width on mobile */
+    #globalSearchInput {
+        width: 100% !important;
+    }
+    
+    /* Improve tab navigation on mobile */
+    .fee-tab, .report-tab {
+        font-size: 0.75rem;
+        padding: 0.625rem 0.875rem;
+    }
+    
+    /* Fix grid layouts on mobile */
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Exception for 2-column layouts that should stay */
+    .grid.grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
 
 /* Responsive Typography */
 @media (max-width: 640px) {
@@ -431,6 +496,12 @@ body {
     h3, .text-lg {
         font-size: 1rem;
     }
+    
+    /* Fix canvas responsive issues */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
 }
 
 /* Improve Form Inputs on Mobile */
@@ -443,6 +514,18 @@ body {
     select,
     textarea {
         font-size: 16px; /* Prevents iOS zoom on focus */
+        padding: 0.625rem 0.75rem;
+    }
+    
+    /* Better dropdown/select on mobile */
+    select {
+        background-size: 1rem;
+        padding-right: 2rem;
+    }
+    
+    /* Improve click targets on mobile */
+    a, button, input, select, textarea {
+        -webkit-tap-highlight-color: rgba(16, 185, 129, 0.1);
     }
 }
 
@@ -466,6 +549,72 @@ body {
     }
 }
 
+/* Additional Mobile Optimizations */
+@media (max-width: 768px) {
+    /* Fix tab container overflow */
+    .inline-flex {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: 100%;
+        scrollbar-width: thin;
+    }
+    
+    /* Better stat cards on mobile */
+    [class*="col-span-"] {
+        grid-column: span 1 / span 1 !important;
+    }
+    
+    /* Improve form inputs on mobile */
+    select, input[type="text"], input[type="search"] {
+        width: 100%;
+    }
+    
+    /* Fix payment method badges */
+    .badge-success, .badge-warning, .badge-danger, .badge-info {
+        font-size: 0.625rem;
+        padding: 0.2rem 0.5rem;
+    }
+    
+    /* Better action button spacing */
+    .flex.items-center.justify-end {
+        gap: 0.25rem;
+    }
+    
+    /* Ensure all tables are scrollable on mobile */
+    table, .overflow-x-auto {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fix table structure for mobile scrolling */
+    table {
+        min-width: 600px;
+    }
+    
+    thead, tbody {
+        display: table;
+        width: 100%;
+    }
+    
+    tr {
+        display: table-row;
+    }
+    
+    th, td {
+        display: table-cell;
+    }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 640px) and (max-width: 1023px) {
+    /* 2-column layout for stats */
+    .grid[class*="lg:grid-cols-"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
 /* Mobile-Friendly Spacing */
 @media (max-width: 640px) {
     .gap-6 {
@@ -479,4 +628,34 @@ body {
     .mb-8 {
         margin-bottom: 1.5rem;
     }
-}
+    
+    /* Reduce padding on small screens */
+    .p-6, .px-6, .py-6 {
+        padding: 1rem !important;
+    }
+    
+    .p-8, .px-8, .py-8 {
+        padding: 1rem !important;
+    }
+    
+    /* Fix chart containers on mobile */
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
+    
+    /* Scrollable content areas */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    
+    /* Better button layouts on mobile */
+    .flex.gap-2, .flex.gap-3 {
+        flex-wrap: wrap;
+    }
+    
+    /* Fix action buttons in tables */
+    td .flex.gap-1 {
+        flex-wrap: nowrap;
+    }
