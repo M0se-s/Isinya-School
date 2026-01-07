@@ -79,9 +79,6 @@ function showScreen(screenId) {
         if (screenId === 'fee-management-screen' && !window.feeChartsInitialized) {
             initFeeCharts();
             window.feeChartsInitialized = true;
-        } else if (screenId === 'classes-screen' && !window.classesChartsInitialized) {
-            // Init classes charts if any
-            window.classesChartsInitialized = true;
         } else if (screenId === 'reports-screen' && !window.reportsChartsInitialized) {
             initReportsCharts();
             window.reportsChartsInitialized = true;
