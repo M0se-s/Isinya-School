@@ -324,3 +324,159 @@ body {
     font-weight: 600;
     transition: background-color 0.2s ease;
 }
+
+/* ========================================
+   MOBILE RESPONSIVE ENHANCEMENTS
+   ======================================== */
+
+/* Touch-Friendly Minimum Sizes */
+@media (max-width: 768px) {
+    /* Minimum touch target size of 44px */
+    button, 
+    a.btn,
+    .btn-primary,
+    .btn-secondary {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Reduce padding on mobile cards */
+    .glass-card,
+    .modern-card,
+    .bento-card {
+        padding: 1rem;
+    }
+    
+    /* Smaller font sizes on mobile */
+    .text-page-title {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+    
+    /* Make tables scrollable with min-width */
+    .modern-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Reduce table cell padding on mobile */
+    .modern-table th {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.625rem;
+    }
+    
+    .modern-table td {
+        padding: 0.625rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+    
+    /* Stack button groups vertically */
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    /* Reduce border radius on mobile for better screen usage */
+    .rounded-3xl,
+    .rounded-\[2rem\],
+    .rounded-\[2\.5rem\] {
+        border-radius: 1rem !important;
+    }
+}
+
+/* Tablet Adjustments (640px - 768px) */
+@media (min-width: 640px) and (max-width: 768px) {
+    /* Intermediate sizing for tablets */
+    .text-page-title {
+        font-size: 1.375rem;
+    }
+    
+    button,
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.625rem 1rem;
+    }
+}
+
+/* Mobile Navigation Enhancements */
+@media (max-width: 768px) {
+    /* Ensure sidebar slides smoothly */
+    #sidebar {
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Backdrop for mobile menu */
+    #mobileBackdrop {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+    body {
+        font-size: 13px;
+    }
+    
+    h1, .text-2xl {
+        font-size: 1.25rem;
+    }
+    
+    h2, .text-xl {
+        font-size: 1.125rem;
+    }
+    
+    h3, .text-lg {
+        font-size: 1rem;
+    }
+}
+
+/* Improve Form Inputs on Mobile */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="search"],
+    select,
+    textarea {
+        font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+}
+
+/* Responsive Grid Utilities */
+.responsive-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .responsive-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .responsive-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* Mobile-Friendly Spacing */
+@media (max-width: 640px) {
+    .gap-6 {
+        gap: 1rem;
+    }
+    
+    .gap-8 {
+        gap: 1.25rem;
+    }
+    
+    .mb-8 {
+        margin-bottom: 1.5rem;
+    }
+}

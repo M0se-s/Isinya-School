@@ -245,12 +245,67 @@ function showSearchFeedback(searchTerm, resultsCount) {
     }, 3000);
 }
 
+// Mobile Menu Toggle
+function setupMobileMenu() {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+    
+    if (!mobileMenuToggle || !sidebar || !mobileBackdrop) return;
+    
+    // Toggle sidebar visibility
+    function toggleSidebar() {
+        const isOpen = sidebar.classList.contains('translate-x-0');
+        
+        if (isOpen) {
+            // Close sidebar
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('-translate-x-full');
+            mobileBackdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        } else {
+            // Open sidebar
+            sidebar.classList.remove('hidden');
+            sidebar.classList.remove('-translate-x-full');
+            sidebar.classList.add('translate-x-0');
+            mobileBackdrop.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        }
+    }
+    
+    // Toggle on button click
+    mobileMenuToggle.addEventListener('click', toggleSidebar);
+    
+    // Close on backdrop click
+    mobileBackdrop.addEventListener('click', toggleSidebar);
+    
+    // Close sidebar when clicking a link (for better UX)
+    const sidebarLinks = sidebar.querySelectorAll('.sidebar-link');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+                toggleSidebar();
+            }
+        });
+    });
+    
+    // Close sidebar on window resize to desktop size
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            sidebar.classList.remove('translate-x-0', '-translate-x-full');
+            mobileBackdrop.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
 // Initialize navigation and search on page load
 document.addEventListener('DOMContentLoaded', () => {
     // Wait for components to load before setting up navigation
     setTimeout(() => {
         setupNavigation();
         setupGlobalSearch();
+        setupMobileMenu();
     }, 200);
 });
 

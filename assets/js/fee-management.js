@@ -770,7 +770,7 @@ function viewStudentFeeDetails(studentId, studentName, className, totalAmount, b
                         <h2 class="text-2xl font-bold">${studentName}</h2>
                         <p class="text-emerald-100 mt-1">${className} • ${studentId}</p>
                     </div>
-                    <button onclick="closeModal('studentFeeDetailsModal')" class="p-2 hover:bg-white/20 rounded-full transition-colors">
+                    <button onclick="document.getElementById('studentFeeDetailsModal').remove()" class="p-2 hover:bg-white/20 rounded-full transition-colors">
                         <ion-icon name="close-outline" class="text-2xl"></ion-icon>
                     </button>
                 </div>
@@ -799,13 +799,13 @@ function viewStudentFeeDetails(studentId, studentName, className, totalAmount, b
                 </div>
                 
                 <div class="flex gap-3">
-                    <button onclick="recordPayment('${studentId}')" class="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-colors">
+                    <button onclick="recordPayment('${studentId}')" class="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
                         <ion-icon name="cash-outline" class="text-lg"></ion-icon>
-                        Record Payment
+                        <span>Record Payment</span>
                     </button>
-                    <button onclick="printInvoice('${studentId}')" class="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold transition-colors">
+                    <button onclick="printInvoice('${studentId}')" class="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2">
                         <ion-icon name="print-outline" class="text-lg"></ion-icon>
-                        Print Invoice
+                        <span>Print Invoice</span>
                     </button>
                 </div>
             </div>
@@ -813,7 +813,13 @@ function viewStudentFeeDetails(studentId, studentName, className, totalAmount, b
     `;
     
     document.body.appendChild(modal);
-    setTimeout(() => modal.classList.remove('hidden'), 10);
+    
+    // Add click handler to close modal when clicking on overlay
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
 }
 
 // Print invoice function

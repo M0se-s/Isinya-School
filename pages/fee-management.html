@@ -60,7 +60,7 @@
             </div>
         </aside>
 
-        <main class="flex-1 bg-[#f8fafc] p-4 md:p-8 overflow-y-auto h-screen">
+        <main class="flex-1 bg-[#f8fafc] p-3 sm:p-4 md:p-8 overflow-y-auto h-screen">
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-slate-900">Fees Management</h1>
@@ -98,8 +98,8 @@
 
             <!-- TAB 1: OVERVIEW -->
             <div id="overview" class="fee-tab-content">
-                <div class="grid grid-cols-12 gap-6 mb-6">
-                    <div class="col-span-3 bg-white rounded-2xl border border-slate-200 p-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 mb-6">
+                    <div class="sm:col-span-2 lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-5">
                         <h3 class="text-sm font-semibold text-slate-900 mb-4">Fee Status</h3>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between p-3 bg-emerald-50 rounded-xl">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-5 bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="sm:col-span-2 lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-5">
                         <h3 class="text-sm font-semibold text-slate-900 mb-4">Fees Collection</h3>
                         <div class="relative h-48">
                             <canvas id="feeCollectionChart"></canvas>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-4 bg-white rounded-2xl border border-slate-200 p-5">
+                    <div class="sm:col-span-2 lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-5">
                         <h3 class="text-sm font-semibold text-slate-900 mb-4">Fee Overview</h3>
                         <div class="grid grid-cols-2 gap-3">
                             <div class="p-3 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-xl">

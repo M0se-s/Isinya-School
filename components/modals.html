@@ -1,9 +1,9 @@
 <!-- All Modals -->
 
 <!-- 1. Student Detail Modal -->
-<div id="studentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
-    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
-        <div class="bg-slate-50 border-b border-slate-100 p-6 flex items-start justify-between">
+<div id="studentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-2 sm:p-4">
+    <div class="bg-white w-full max-w-full sm:max-w-2xl rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-slate-50 border-b border-slate-100 p-4 sm:p-6 flex items-start justify-between">
             <div class="flex items-center gap-4">
                 <div id="modalAvatar" class="w-16 h-16 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">JD</div>
                 <div>
@@ -19,8 +19,8 @@
                 <ion-icon name="close-outline" class="text-2xl"></ion-icon>
             </button>
         </div>
-        <div class="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
-            <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="p-4 sm:p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 <div class="p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
                     <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Total Paid (YTD)</p>
                     <p class="text-xl font-bold">KES 145,200</p>
@@ -46,9 +46,9 @@
 </div>
 
 <!-- 2. Add Student Modal -->
-<div id="addStudentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
-    <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
-        <div class="p-8">
+<div id="addStudentModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-2 sm:p-4">
+    <div class="bg-white w-full max-w-full sm:max-w-lg rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-4 sm:p-8">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold">Add New Student</h2>
                 <button onclick="closeModal('addStudentModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
@@ -89,19 +89,19 @@
 </div>
 
 <!-- 3. View Records Modal -->
-<div id="viewRecordsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
-    <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden h-[80vh] flex flex-col">
-        <div class="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-            <h2 class="text-2xl font-bold">Student Directory</h2>
+<div id="viewRecordsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-2 sm:p-4">
+    <div class="bg-white w-full max-w-full sm:max-w-4xl rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden h-[90vh] sm:h-[80vh] flex flex-col">
+        <div class="p-4 sm:p-8 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h2 class="text-xl sm:text-2xl font-bold">Student Directory</h2>
             <div class="flex items-center gap-3">
-                <div class="relative">
+                <div class="relative hidden sm:block">
                     <ion-icon name="search-outline" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></ion-icon>
-                    <input type="text" placeholder="Filter records..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm w-64 outline-none">
+                    <input type="text" placeholder="Filter records..." class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-xl text-sm w-48 sm:w-64 outline-none">
                 </div>
                 <button onclick="closeModal('viewRecordsModal')" class="p-2 bg-white border rounded-full hover:bg-slate-100"><ion-icon name="close-outline" class="text-xl"></ion-icon></button>
             </div>
         </div>
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-8">
             <table class="w-full text-left">
                 <thead class="text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
                     <tr><th class="pb-4">Name</th><th class="pb-4">Grade</th><th class="pb-4">Parent Phone</th><th class="pb-4">Status</th><th class="pb-4 text-right">Action</th></tr>
@@ -119,9 +119,9 @@
 </div>
 
 <!-- 4. Invoices Modal -->
-<div id="invoicesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
-    <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden">
-        <div class="p-8">
+<div id="invoicesModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-2 sm:p-4">
+    <div class="bg-white w-full max-w-full sm:max-w-2xl rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-4 sm:p-8">
             <div class="flex items-center justify-between mb-8">
                 <h2 class="text-2xl font-bold">Billing & Invoices</h2>
                 <button onclick="closeModal('invoicesModal')" class="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
@@ -145,9 +145,9 @@
 </div>
 
 <!-- 5. Reminders Modal -->
-<div id="remindersModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-4">
-    <div class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl overflow-hidden">
-        <div class="p-8">
+<div id="remindersModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm hidden p-2 sm:p-4">
+    <div class="bg-white w-full max-w-full sm:max-w-lg rounded-2xl sm:rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="p-4 sm:p-8">
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h2 class="text-2xl font-bold">Send Reminders</h2>
