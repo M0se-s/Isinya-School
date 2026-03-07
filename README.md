@@ -1,4 +1,4 @@
-# Isinya School Management System - Refactored Structure
+# Isinya School Management System 
 
 ## 📁 Project Structure
 
