@@ -75,7 +75,7 @@ Isinya School/
 2. Add it to the loader in `assets/js/loader.js`
 3. Reference it with an ID in your page files
 
-## 🔧 Development Notes
+## Development Notes
 
 ### Component Loading
 
