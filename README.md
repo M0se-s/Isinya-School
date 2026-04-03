@@ -1,6 +1,6 @@
 # Isinya School Management System 
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Isinya School/
@@ -28,7 +28,7 @@ Isinya School/
         └── charts.js          # Chart.js initializations
 ```
 
-## 🚀 Key Improvements
+## Key Improvements
 
 ### 1. **Modular Architecture**
 
@@ -55,7 +55,7 @@ Isinya School/
 - `modals.js` - Modal open/close functionality
 - `charts.js` - Chart.js initialization for all pages
 
-## 📝 How to Use
+## How to Use
 
 ### Starting the Application
 
@@ -97,11 +97,11 @@ Charts are initialized based on the current page:
 - Fee Management → `initFeeCharts()`
 - Reports → `initReportsCharts()`
 
-## 🎨 Styling
+## Styling
 
 All styles remain in the main `styles.css` file. Tailwind CSS is used via CDN for utility classes.
 
-## 📦 Dependencies
+## Dependencies
 
 - **Tailwind CSS** - Utility-first CSS framework
 - **Chart.js** - Chart rendering
@@ -109,7 +109,7 @@ All styles remain in the main `styles.css` file. Tailwind CSS is used via CDN fo
 - **Lucide Icons** - Additional icons
 - **Inter Font** - Typography
 
-## 🔄 Migration from Old Structure
+## Migration from Old Structure
 
 The original `index.html` has been preserved as `index.html.bak`. The refactored version:
 
@@ -118,7 +118,7 @@ The original `index.html` has been preserved as `index.html.bak`. The refactored
 - Splits JavaScript into logical modules
 - Maintains all original functionality
 
-## 💡 Benefits
+## Benefits
 
 1. **Easier Maintenance** - Find and update code quickly
 2. **Better Collaboration** - Multiple developers can work on different pages
